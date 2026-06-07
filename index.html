@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)file:///Users/pato/Downloads/index_62.html -->
+<!-- saved from url=(0042)file:///Users/pato/Downloads/index_63.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -1079,7 +1079,7 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="lightbox-img" src="file:///Users/pato/Downloads/index_62.html" alt="">
+  <img id="lightbox-img" src="file:///Users/pato/Downloads/index_63.html" alt="">
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1408,7 +1408,7 @@ async function quickAddBtn() {
   var v = inp.value.trim(); if (!v) return;
   var t = { id:'task-'+Date.now(), title:v, note:'', category: state.catFilter||'', due:'', reminder_time:'', priority:'normal', done:false, status:'todo', is_shared:false, owner:state.currentUser, created_at:Date.now(), comments:[] };
   state.tasks.unshift(t); renderTasks(); inp.value = '';
-  await supaInsert('focusd_tasks', { id:t.id, title:t.title, note:t.note, category:t.category, due:t.due, reminder_time:t.reminder_time, priority:t.priority, done:t.done, is_shared:t.is_shared, owner:t.owner, created_at:t.created_at });
+  await supaInsert('focusd_tasks', { id:t.id, title:t.title, note:t.note, category:t.category, subcategory:t.subcategory||'', subcategory_label:t.subcategory_label||'', due:t.due, reminder_time:t.reminder_time, priority:t.priority, done:t.done, status:t.status||'todo', is_shared:t.is_shared, tags:t.tags||'', owner:t.owner, created_at:t.created_at });
   showToast('Task added ✓');
 }
 

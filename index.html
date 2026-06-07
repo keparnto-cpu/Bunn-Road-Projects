@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)file:///Users/pato/Downloads/index_61.html -->
+<!-- saved from url=(0042)file:///Users/pato/Downloads/index_62.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -700,6 +700,12 @@
 
   @media (min-width: 769px) {
   }
+  /* LIGHTBOX */
+  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 500; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox img { max-width: 95vw; max-height: 90vh; border-radius: 12px; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lightbox-close { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.15); border: none; color: white; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 501; touch-action: manipulation; }
+  .lightbox-close:hover { background: rgba(255,255,255,0.25); }
 </style>
 </head>
 <body>
@@ -728,7 +734,7 @@
   </div>
   <div class="nav-section">
     <div class="nav-label">Views</div>
-    <div class="nav-item active" onclick="switchPanel(&#39;tasks&#39;,this)" id="nav-tasks"><span class="icon">✓</span><span>All Tasks</span><span class="badge" id="badge-tasks">0</span></div>
+    <div class="nav-item active" onclick="switchPanel(&#39;tasks&#39;,this)" id="nav-tasks"><span class="icon">✓</span><span>All Tasks</span><span class="badge" id="badge-tasks">1</span></div>
     <div class="nav-item" onclick="switchPanel(&#39;tasks&#39;,this);setVisFilter(&#39;mine&#39;,document.querySelector(&#39;.vis-btn[data-v=mine]&#39;))" id="nav-mine"><span class="icon">🔒</span><span>My Private</span></div>
     <div class="nav-item" onclick="switchPanel(&#39;tasks&#39;,this);setVisFilter(&#39;shared&#39;,document.querySelector(&#39;.vis-btn[data-v=shared]&#39;))" id="nav-shared"><span class="icon">👥</span><span>Shared</span></div>
     <div class="nav-item" onclick="switchPanel(&#39;calendar&#39;,this)"><span class="icon">📅</span><span>Calendar</span></div>
@@ -784,8 +790,8 @@
       </div>
     </div>
     <div class="progress-bar-wrap">
-      <div class="progress-info"><span id="progress-label">8 of 8 done</span><span id="progress-pct">100%</span></div>
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 100%;"></div></div>
+      <div class="progress-info"><span id="progress-label">7 of 8 done</span><span id="progress-pct">88%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 88%;"></div></div>
     </div>
     <!-- MOBILE CATEGORY PICKER -->
     <div class="cat-strip" id="cat-strip"><button class="cat-picker-btn " onclick="openCatPicker()"><span class="picker-icon">🏠</span><span class="picker-label">All Categories</span><span class="picker-chevron">▾</span></button></div>
@@ -808,7 +814,7 @@
       <div id="tag-filter-pills"></div>
       <button class="tag-filter-pill" onclick="clearTagFilter()" style="color:var(--text-dim)">✕ Clear</button>
     </div>
-    <div class="tasks-list" id="tasks-list"><div class="task-group-label" style="display:flex;align-items:center;justify-content:space-between">Completed (8) <span style="cursor:pointer;color:var(--accent);font-size:11px" onclick="toggleCompleted()">Hide</span></div><div class="task-item done" data-id="task-1780801112035"><div class="task-check" data-toggleid="task-1780801112035"></div><div class="task-content" data-drawerid="task-1780801112035"><div class="task-title">Clean chairs</div><div class="task-meta"><span class="task-tag" style="background:#3b82f622;color:#3b82f6;border-color:#3b82f633">🏊 Pool Area</span><span class="task-tag shared">👥 Shared</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780801112035" title="Comments">💬</button></div></div><div class="task-item done private-task" data-id="task-1780833373074"><div class="task-check" data-toggleid="task-1780833373074"></div><div class="task-content" data-drawerid="task-1780833373074"><div class="task-title">Hdjdbdb</div><div class="task-note">Hsjdbdb</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780833373074" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780833373074" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780833373074" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780832762717"><div class="task-check" data-toggleid="task-1780832762717"></div><div class="task-content" data-drawerid="task-1780832762717"><div class="task-title">Frydfg</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780832762717" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780832762717" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780832762717" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780804144337"><div class="task-check" data-toggleid="task-1780804144337"></div><div class="task-content" data-drawerid="task-1780804144337"><div class="task-title">Fhcgh</div><div class="task-note">Vhfhvv</div><div class="task-meta"><span class="task-tag" style="background:#3b82f622;color:#3b82f6;border-color:#3b82f633">🏠 Main House</span><span class="task-tag due">📅 Jun 10</span><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780804144337" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780804144337" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780804144337" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780803316177"><div class="task-check" data-toggleid="task-1780803316177"></div><div class="task-content" data-drawerid="task-1780803316177"><div class="task-title">asdasdfasdgasdgasdg</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780803316177" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780803316177" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780803316177" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780803130844"><div class="task-check" data-toggleid="task-1780803130844"></div><div class="task-content" data-drawerid="task-1780803130844"><div class="task-title">tttttttt</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780803130844" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780803130844" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780803130844" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780803124244"><div class="task-check" data-toggleid="task-1780803124244"></div><div class="task-content" data-drawerid="task-1780803124244"><div class="task-title">asdfasd</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780803124244" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780803124244" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780803124244" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780803040744"><div class="task-check" data-toggleid="task-1780803040744"></div><div class="task-content" data-drawerid="task-1780803040744"><div class="task-title">sdfasdfasd</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780803040744" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780803040744" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780803040744" title="Delete">🗑</button></div></div></div>
+    <div class="tasks-list" id="tasks-list"><div class="task-item" data-id="task-1780833956830"><div class="task-check" data-toggleid="task-1780833956830"></div><div class="task-content" data-drawerid="task-1780833956830"><div class="task-title">Repair cabinet door</div><div class="task-meta"><span class="task-tag" style="background:#3b82f622;color:#3b82f6;border-color:#3b82f633">🏠 Main House</span><span class="task-tag shared">👥 Shared</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780833956830" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780833956830" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780833956830" title="Delete">🗑</button></div></div><div class="task-group-label" style="display:flex;align-items:center;justify-content:space-between">Completed (7) <span style="cursor:pointer;color:var(--accent);font-size:11px" onclick="toggleCompleted()">Hide</span></div><div class="task-item done private-task" data-id="task-1780833373074"><div class="task-check" data-toggleid="task-1780833373074"></div><div class="task-content" data-drawerid="task-1780833373074"><div class="task-title">Hdjdbdb</div><div class="task-note">Hsjdbdb</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780833373074" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780833373074" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780833373074" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780832762717"><div class="task-check" data-toggleid="task-1780832762717"></div><div class="task-content" data-drawerid="task-1780832762717"><div class="task-title">Frydfg</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780832762717" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780832762717" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780832762717" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780804144337"><div class="task-check" data-toggleid="task-1780804144337"></div><div class="task-content" data-drawerid="task-1780804144337"><div class="task-title">Fhcgh</div><div class="task-note">Vhfhvv</div><div class="task-meta"><span class="task-tag" style="background:#3b82f622;color:#3b82f6;border-color:#3b82f633">🏠 Main House</span><span class="task-tag due">📅 Jun 10</span><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780804144337" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780804144337" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780804144337" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780803316177"><div class="task-check" data-toggleid="task-1780803316177"></div><div class="task-content" data-drawerid="task-1780803316177"><div class="task-title">asdasdfasdgasdgasdg</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780803316177" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780803316177" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780803316177" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780803130844"><div class="task-check" data-toggleid="task-1780803130844"></div><div class="task-content" data-drawerid="task-1780803130844"><div class="task-title">tttttttt</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780803130844" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780803130844" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780803130844" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780803124244"><div class="task-check" data-toggleid="task-1780803124244"></div><div class="task-content" data-drawerid="task-1780803124244"><div class="task-title">asdfasd</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780803124244" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780803124244" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780803124244" title="Delete">🗑</button></div></div><div class="task-item done private-task" data-id="task-1780803040744"><div class="task-check" data-toggleid="task-1780803040744"></div><div class="task-content" data-drawerid="task-1780803040744"><div class="task-title">sdfasdfasd</div><div class="task-meta"><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780803040744" title="Comments">💬</button><button class="task-action-btn" data-editid="task-1780803040744" title="Edit">✏️</button><button class="task-action-btn del" data-deleteid="task-1780803040744" title="Delete">🗑</button></div></div></div>
     <!-- BOARD VIEW -->
     <div class="board-wrap" id="board-wrap" style="display:none"></div>
 
@@ -894,11 +900,11 @@
   <div class="drawer">
     <button class="drawer-close" id="drawer-close-btn">✕</button>
     <div class="drawer-header">
-      <h3 id="drawer-title">Clean chairs</h3>
-      <div class="drawer-cat" id="drawer-cat" style="color: rgb(59, 130, 246);">🏊 Pool Area</div>
+      <h3 id="drawer-title"></h3>
+      <div class="drawer-cat" id="drawer-cat"></div>
     </div>
     <div class="drawer-body">
-      <div id="drawer-share-row" class="drawer-section"><div style="font-size:12px;color:var(--text-muted);margin-bottom:10px">Created by <strong>Pato</strong> · 👥 Shared</div></div>
+      <div id="drawer-share-row" class="drawer-section"></div>
       <div class="drawer-section" id="drawer-note-section" style="display:none">
         <div class="drawer-section-label">Notes</div>
         <div id="drawer-note" style="font-size:13px;color:var(--text-muted);line-height:1.6"></div>
@@ -914,7 +920,7 @@
       </div>
       <div class="drawer-section">
         <div class="drawer-section-label">Comments <span style="font-size:10px;color:var(--text-dim)">(visible to team on shared tasks)</span></div>
-        <div id="drawer-comments"><div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">No comments yet.</div></div>
+        <div id="drawer-comments"></div>
         <div class="comment-input-row">
           <textarea class="comment-input" id="comment-input" placeholder="Add a comment… (Enter to post)" rows="2" onkeydown="commentKeydown(event)"></textarea>
           <button class="btn btn-primary btn-sm" style="align-self:flex-end" onclick="postComment()">Post</button>
@@ -1069,6 +1075,12 @@
 
 <!-- FAB -->
 <button class="fab" onclick="openTaskModal()" title="Add Task">+</button>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="file:///Users/pato/Downloads/index_62.html" alt="">
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -2405,7 +2417,7 @@ function renderDrawerAttachments(t) {
   atts.forEach(function(a, i) {
     if (a.type && a.type.startsWith('image/')) {
       html += '<div style="position:relative;display:inline-block">' +
-        '<img src="'+a.data+'" style="width:56px;height:56px;border-radius:8px;object-fit:cover;border:1px solid #93afd4" data-imgidx="'+i+'">' +
+        '<img src="'+a.data+'" style="width:56px;height:56px;border-radius:8px;object-fit:cover;border:1px solid #93afd4;cursor:zoom-in" data-lightboxsrc="'+i+'">' +
         '<span data-drawerdelattach="'+i+'" style="position:absolute;top:-4px;right:-4px;background:#ef4444;color:white;border-radius:50%;width:18px;height:18px;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer">✕</span>' +
       '</div>';
     } else {
@@ -2416,6 +2428,13 @@ function renderDrawerAttachments(t) {
     }
   });
   wrap.innerHTML = html;
+  wrap.querySelectorAll('[data-lightboxsrc]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var idx = parseInt(el.dataset.lightboxsrc);
+      if (t.attachments && t.attachments[idx]) openLightbox(t.attachments[idx].data);
+    });
+  });
   wrap.querySelectorAll('[data-drawerdelattach]').forEach(function(el) {
     el.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -2431,6 +2450,18 @@ function renderDrawerAttachments(t) {
 function syncMobileNav(el) {
   document.querySelectorAll('#mobile-nav-section .nav-item').forEach(function(n){ n.classList.remove('active'); });
   if (el) el.classList.add('active');
+}
+
+// ── LIGHTBOX ──
+function openLightbox(src) {
+  var lb = document.getElementById('lightbox');
+  var img = document.getElementById('lightbox-img');
+  img.src = src;
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox-img').src = '';
 }
 
 // ── UTILS ──

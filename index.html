@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)file:///Users/pato/Downloads/index_26.html -->
+<!-- saved from url=(0042)file:///Users/pato/Downloads/index_27.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,6 +106,54 @@
   .task-tag.private { background: rgba(160,160,160,0.1); color: #888; border-color: rgba(160,160,160,0.2); }
   .task-tag.shared { background: rgba(16,185,129,0.1); color: #059669; border-color: rgba(16,185,129,0.2); }
   .comment-count { font-size: 11px; color: var(--text-dim); display: flex; align-items: center; gap: 3px; }
+
+  /* MOBILE CATEGORY STRIP */
+  .cat-strip {
+    display: none; /* hidden on desktop */
+  }
+  @media (max-width: 768px) {
+    .cat-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 16px 4px;
+      flex-shrink: 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .cat-strip::-webkit-scrollbar { display: none; }
+    .cat-strip-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      background: var(--surface);
+      color: var(--text-muted);
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .cat-strip-pill.active {
+      color: white;
+      border-color: transparent;
+    }
+    .cat-strip-pill.all-pill {
+      background: var(--surface2);
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+    .cat-strip-pill.all-pill.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+  }
 
   /* TAGS */
   .tag-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 500; white-space: nowrap; border: 1px solid transparent; }
@@ -416,7 +464,7 @@
   </div>
   <div class="nav-section">
     <div class="nav-label">Views</div>
-    <div class="nav-item active" onclick="switchPanel(&#39;tasks&#39;,this)" id="nav-tasks"><span class="icon">✓</span><span>All Tasks</span><span class="badge" id="badge-tasks">0</span></div>
+    <div class="nav-item active" onclick="switchPanel(&#39;tasks&#39;,this)" id="nav-tasks"><span class="icon">✓</span><span>All Tasks</span><span class="badge" id="badge-tasks">1</span></div>
     <div class="nav-item" onclick="switchPanel(&#39;tasks&#39;,this);setVisFilter(&#39;mine&#39;,document.querySelector(&#39;.vis-btn[data-v=mine]&#39;))" id="nav-mine"><span class="icon">🔒</span><span>My Private</span></div>
     <div class="nav-item" onclick="switchPanel(&#39;tasks&#39;,this);setVisFilter(&#39;shared&#39;,document.querySelector(&#39;.vis-btn[data-v=shared]&#39;))" id="nav-shared"><span class="icon">👥</span><span>Shared</span></div>
     <div class="nav-item" onclick="switchPanel(&#39;calendar&#39;,this)"><span class="icon">📅</span><span>Calendar</span></div>
@@ -466,9 +514,12 @@
       <div class="sub" id="tasks-date-header">Saturday, June 6</div>
     </div>
     <div class="progress-bar-wrap">
-      <div class="progress-info"><span id="progress-label">0 of 0 done</span><span id="progress-pct">0%</span></div>
+      <div class="progress-info"><span id="progress-label">0 of 1 done</span><span id="progress-pct">0%</span></div>
       <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     </div>
+    <!-- MOBILE CATEGORY STRIP -->
+    <div class="cat-strip" id="cat-strip"><div class="cat-strip-pill all-pill active" data-catstrip="all">All</div><div class="cat-strip-pill" data-catstrip="main-house" style="border-color:#f4623a44;color:#f4623a">🏠 Main House</div><div class="cat-strip-pill" data-catstrip="pool" style="border-color:#3b82f644;color:#3b82f6">🏊 Pool Area</div><div class="cat-strip-pill" data-catstrip="garden" style="border-color:#10b98144;color:#10b981">🌿 Garden</div><div class="cat-strip-pill" data-catstrip="carriage-k" style="border-color:#8b5cf644;color:#8b5cf6">🏡 Carriage House (Kristen)</div><div class="cat-strip-pill" data-catstrip="carriage-g" style="border-color:#ec489944;color:#ec4899">🛎 Carriage House (Guest)</div><div class="cat-strip-pill" data-catstrip="garage1" style="border-color:#f59e0b44;color:#f59e0b">🚗 Garage 1</div><div class="cat-strip-pill" data-catstrip="garage2" style="border-color:#d9770644;color:#d97706">🚙 Garage 2</div><div class="cat-strip-pill" data-catstrip="barn" style="border-color:#92400e44;color:#92400e">🐎 Barn</div><div class="cat-strip-pill" data-catstrip="grounds" style="border-color:#065f4644;color:#065f46">🌳 Grounds</div></div>
+
     <div class="tasks-toolbar">
       <button class="filter-btn active" onclick="setFilter(&#39;all&#39;,this)">All</button>
       <button class="filter-btn" onclick="setFilter(&#39;active&#39;,this)">Active</button>
@@ -485,7 +536,7 @@
       <div id="tag-filter-pills"></div>
       <button class="tag-filter-pill" onclick="clearTagFilter()" style="color:var(--text-dim)">✕ Clear</button>
     </div>
-    <div class="tasks-list" id="tasks-list"><div class="empty-state"><div class="ei">✨</div><p>No tasks here.<br>Add one above!</p></div></div>
+    <div class="tasks-list" id="tasks-list"><div class="task-item" data-id="task-1780794213375"><div class="task-check" data-toggleid="task-1780794213375"></div><div class="task-content" data-drawerid="task-1780794213375"><div class="task-title">Test</div><div class="task-meta"><span class="task-tag shared">👥 Shared</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780794213375" title="Comments">💬</button></div></div></div>
     <div class="quick-add">
       <input type="text" id="quick-input" placeholder="Quick add… press Enter (private by default)" onkeydown="quickAdd(event)">
       <button class="btn btn-primary btn-sm" onclick="quickAddBtn()">Add</button>
@@ -915,6 +966,7 @@ function renderTasks() {
   document.getElementById('progress-fill').style.width = pct + '%';
   document.getElementById('badge-tasks').textContent = active;
   renderTagFilterBar();
+  renderCatStrip();
 
   if (!tasks.length) {
     list.innerHTML = '<div class="empty-state"><div class="ei">✨</div><p>No tasks here.<br>Add one above!</p></div>';
@@ -1685,6 +1737,37 @@ async function deleteSubcat(id, catId) {
   if (card) card.classList.add('open');
   await supaDelete('focusd_subcategories', id);
   showToast('Subcategory removed');
+}
+
+// ── MOBILE CATEGORY STRIP ──
+function renderCatStrip() {
+  var strip = document.getElementById('cat-strip');
+  if (!strip) return;
+  var html = '<div class="cat-strip-pill all-pill' + (!state.catFilter ? ' active' : '') + '" data-catstrip="all">All</div>';
+  CATEGORIES.forEach(function(cat) {
+    var isActive = state.catFilter === cat.id;
+    html += '<div class="cat-strip-pill' + (isActive ? ' active' : '') + '" data-catstrip="' + cat.id + '" style="' + (isActive ? 'background:' + cat.color + ';border-color:' + cat.color : 'border-color:' + cat.color + '44;color:' + cat.color) + '">' +
+      cat.icon + ' ' + cat.label +
+    '</div>';
+  });
+  strip.innerHTML = html;
+  strip.querySelectorAll('[data-catstrip]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      var val = el.dataset.catstrip;
+      if (val === 'all') {
+        state.catFilter = null;
+        state.subcatFilter = null;
+        document.getElementById('tasks-panel-title').textContent = '✓ All Tasks';
+      } else {
+        state.catFilter = val;
+        state.subcatFilter = null;
+        var cat = CATEGORIES.find(function(c){ return c.id === val; });
+        document.getElementById('tasks-panel-title').textContent = cat ? cat.icon + ' ' + cat.label : 'Tasks';
+      }
+      renderCatStrip();
+      renderTasks();
+    });
+  });
 }
 
 // ── MOBILE NAV SYNC ──

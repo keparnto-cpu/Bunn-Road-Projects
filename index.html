@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)file:///Users/pato/Downloads/index_32.html -->
+<!-- saved from url=(0042)file:///Users/pato/Downloads/index_33.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Bunn Road">
@@ -106,6 +106,37 @@
   .task-tag.private { background: rgba(160,160,160,0.1); color: #888; border-color: rgba(160,160,160,0.2); }
   .task-tag.shared { background: rgba(16,185,129,0.1); color: #059669; border-color: rgba(16,185,129,0.2); }
   .comment-count { font-size: 11px; color: var(--text-dim); display: flex; align-items: center; gap: 3px; }
+
+  /* BOARD VIEW */
+  .board-wrap { flex: 1; overflow-x: auto; overflow-y: hidden; display: flex; gap: 16px; padding: 16px 28px; -webkit-overflow-scrolling: touch; }
+  .board-wrap::-webkit-scrollbar { height: 4px; }
+  .board-wrap::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius: 4px; }
+  .board-col { flex-shrink: 0; width: 280px; display: flex; flex-direction: column; background: var(--surface2); border-radius: 14px; overflow: hidden; max-height: 100%; }
+  .board-col-header { padding: 14px 16px 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border-soft); flex-shrink: 0; }
+  .board-col-title { font-family: 'Lora', serif; font-size: 15px; font-weight: 600; color: var(--text); flex: 1; }
+  .board-col-count { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .board-col-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .board-col-tasks { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; -webkit-overflow-scrolling: touch; }
+  .board-col-tasks::-webkit-scrollbar { width: 3px; }
+  .board-col-tasks::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius: 3px; }
+  .board-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px; padding: 12px 13px; cursor: pointer; transition: all 0.15s; position: relative; }
+  .board-card:hover { border-color: var(--border); box-shadow: 0 2px 12px rgba(45,26,22,0.08); transform: translateY(-1px); }
+  .board-card-title { font-size: 13.5px; color: var(--text); font-weight: 500; line-height: 1.4; margin-bottom: 6px; }
+  .board-card-meta { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+  .board-card-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-soft); }
+  .board-status-btn { font-size: 11px; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); background: transparent; cursor: pointer; color: var(--text-muted); font-family: 'Nunito', sans-serif; transition: all 0.15s; }
+  .board-status-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .board-empty { text-align: center; padding: 30px 10px; color: var(--text-dim); font-size: 12px; }
+
+  /* View toggle buttons */
+  .view-toggle { display: flex; gap: 4px; background: var(--surface2); border-radius: 10px; padding: 3px; }
+  .view-toggle-btn { padding: 5px 12px; border-radius: 8px; border: none; background: transparent; cursor: pointer; font-size: 13px; color: var(--text-muted); font-family: 'Nunito', sans-serif; transition: all 0.15s; }
+  .view-toggle-btn.active { background: var(--surface); color: var(--text); font-weight: 500; box-shadow: 0 1px 4px rgba(45,26,22,0.1); }
+
+  @media (max-width: 768px) {
+    .board-col { width: 240px; }
+    .board-wrap { padding: 12px 14px; gap: 12px; }
+  }
 
   /* MOBILE CATEGORY PICKER + FAB */
   .cat-strip { display: none; }
@@ -594,7 +625,7 @@
   </div>
   <div class="nav-section">
     <div class="nav-label">Views</div>
-    <div class="nav-item active" onclick="switchPanel(&#39;tasks&#39;,this)" id="nav-tasks"><span class="icon">✓</span><span>All Tasks</span><span class="badge" id="badge-tasks">1</span></div>
+    <div class="nav-item active" onclick="switchPanel(&#39;tasks&#39;,this)" id="nav-tasks"><span class="icon">✓</span><span>All Tasks</span><span class="badge" id="badge-tasks">3</span></div>
     <div class="nav-item" onclick="switchPanel(&#39;tasks&#39;,this);setVisFilter(&#39;mine&#39;,document.querySelector(&#39;.vis-btn[data-v=mine]&#39;))" id="nav-mine"><span class="icon">🔒</span><span>My Private</span></div>
     <div class="nav-item" onclick="switchPanel(&#39;tasks&#39;,this);setVisFilter(&#39;shared&#39;,document.querySelector(&#39;.vis-btn[data-v=shared]&#39;))" id="nav-shared"><span class="icon">👥</span><span>Shared</span></div>
     <div class="nav-item" onclick="switchPanel(&#39;calendar&#39;,this)"><span class="icon">📅</span><span>Calendar</span></div>
@@ -639,13 +670,19 @@
 
   <!-- TASKS PANEL -->
   <div class="panel active" id="panel-tasks">
-    <div class="panel-header">
-      <h2 id="tasks-panel-title">✓ All Tasks</h2>
-      <div class="sub" id="tasks-date-header">Saturday, June 6</div>
+    <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div>
+        <h2 id="tasks-panel-title">✓ All Tasks</h2>
+        <div class="sub" id="tasks-date-header">Saturday, June 6</div>
+      </div>
+      <div class="view-toggle">
+        <button class="view-toggle-btn" id="view-list-btn" onclick="setViewMode(&#39;list&#39;)">☰ List</button>
+        <button class="view-toggle-btn active" id="view-board-btn" onclick="setViewMode(&#39;board&#39;)">⊞ Board</button>
+      </div>
     </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-info"><span id="progress-label">0 of 1 done</span><span id="progress-pct">0%</span></div>
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-bar-wrap" style="display: none;">
+      <div class="progress-info"><span id="progress-label">1 of 4 done</span><span id="progress-pct">25%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 25%;"></div></div>
     </div>
     <!-- MOBILE CATEGORY PICKER -->
     <div class="cat-strip" id="cat-strip"><button class="cat-picker-btn " onclick="openCatPicker()"><span class="picker-icon">🏠</span><span class="picker-label">All Categories</span><span class="picker-chevron">▾</span></button></div>
@@ -660,17 +697,22 @@
       <button class="vis-btn filter-btn" data-v="mine" onclick="setVisFilter(&#39;mine&#39;,this)">🔒 Mine</button>
       <button class="vis-btn filter-btn" data-v="shared" onclick="setVisFilter(&#39;shared&#39;,this)">👥 Shared</button>
       <button class="btn btn-primary btn-sm" onclick="openTaskModal()">+ Add Task</button>
+      <button class="filter-btn" id="completed-toggle" onclick="toggleCompleted()" style="white-space:nowrap">✓ Hide Done</button>
     </div>
     <div class="tag-filter-bar" id="tag-filter-bar" style="display:none">
       <span class="tag-filter-label">🏷 Tag:</span>
       <div id="tag-filter-pills"></div>
       <button class="tag-filter-pill" onclick="clearTagFilter()" style="color:var(--text-dim)">✕ Clear</button>
     </div>
-    <div class="tasks-list" id="tasks-list"><div class="task-item" data-id="task-1780794213375"><div class="task-check" data-toggleid="task-1780794213375"></div><div class="task-content" data-drawerid="task-1780794213375"><div class="task-title">Test</div><div class="task-meta"><span class="task-tag shared">👥 Shared</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780794213375" title="Comments">💬</button></div></div></div>
-    <div class="quick-add">
+    <div class="tasks-list" id="tasks-list" style="display: none;"><div class="task-item" data-id="task-1780794213375"><div class="task-check" data-toggleid="task-1780794213375"></div><div class="task-content" data-drawerid="task-1780794213375"><div class="task-title">Test</div><div class="task-meta"><span class="task-tag shared">👥 Shared</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780794213375" title="Comments">💬</button></div></div><div class="task-item urgent private-task" data-id="task-1780795850905"><div class="task-check" data-toggleid="task-1780795850905"></div><div class="task-content" data-drawerid="task-1780795850905"><div class="task-title">Hdhddb</div><div class="task-note">Jfhxndb</div><div class="task-meta"><span class="task-tag" style="background:#10b98122;color:#10b981;border-color:#10b98133">🌿 Garden</span><span class="task-tag urgent">🔥 Urgent</span><span class="task-tag due">📅 Jun 17</span><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780795850905" title="Comments">💬</button><button class="task-action-btn del" data-deleteid="task-1780795850905" title="Delete">🗑</button></div></div><div class="task-item private-task" data-id="task-1780795829474"><div class="task-check" data-toggleid="task-1780795829474"></div><div class="task-content" data-drawerid="task-1780795829474"><div class="task-title">Fix fence</div><div class="task-note">Testvenfidndifb</div><div class="task-meta"><span class="task-tag due">📅 Jun 6</span><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780795829474" title="Comments">💬</button><button class="task-action-btn del" data-deleteid="task-1780795829474" title="Delete">🗑</button></div></div><div class="task-group-label" style="display:flex;align-items:center;justify-content:space-between">Completed (1) <span style="cursor:pointer;color:var(--accent);font-size:11px" onclick="toggleCompleted()">Hide</span></div><div class="task-item done private-task" data-id="task-1780795708805"><div class="task-check" data-toggleid="task-1780795708805"></div><div class="task-content" data-drawerid="task-1780795708805"><div class="task-title">Test</div><div class="task-note">Buy shoe closet</div><div class="task-meta"><span class="task-tag" style="background:#f4623a22;color:#f4623a;border-color:#f4623a33">🏠 Main House</span><span class="task-tag due">📅 Jun 10</span><span class="task-tag private">🔒 Private</span></div></div><div class="task-actions"><button class="task-action-btn" data-drawerid="task-1780795708805" title="Comments">💬</button><button class="task-action-btn del" data-deleteid="task-1780795708805" title="Delete">🗑</button></div></div></div>
+    <!-- BOARD VIEW -->
+    <div class="board-wrap" id="board-wrap" style="display: flex;"><div class="board-col"><div class="board-col-header"><span class="board-col-dot" style="background:#3b82f6"></span><span class="board-col-title">To Do</span><span class="board-col-count" style="background:rgba(59,130,246,0.12);color:#3b82f6">3</span></div><div class="board-col-tasks" id="boardcol-todo"><div class="board-card" data-boarddrawer="task-1780794213375"><div class="board-card-title">Test</div><div class="board-card-meta"></div><div class="board-card-actions"><button class="board-status-btn" data-boardid="task-1780794213375" data-boardstatus="inprogress">Start →</button><button class="board-status-btn" data-boarddone="task-1780794213375" style="color:var(--accent4);border-color:var(--accent4)">✓ Done</button></div></div><div class="board-card" data-boarddrawer="task-1780795850905"><div class="board-card-title">Hdhddb</div><div class="board-card-meta"><span class="task-tag" style="background:#10b98122;color:#10b981;border-color:#10b98133;font-size:10px">🌿 Garden</span><span class="task-tag due" style="font-size:10px">📅 Jun 17</span><span class="task-tag urgent" style="font-size:10px">🔥</span></div><div class="board-card-actions"><button class="board-status-btn" data-boardid="task-1780795850905" data-boardstatus="inprogress">Start →</button><button class="board-status-btn" data-boarddone="task-1780795850905" style="color:var(--accent4);border-color:var(--accent4)">✓ Done</button></div></div><div class="board-card" data-boarddrawer="task-1780795829474"><div class="board-card-title">Fix fence</div><div class="board-card-meta"><span class="task-tag due" style="font-size:10px">📅 Jun 6</span></div><div class="board-card-actions"><button class="board-status-btn" data-boardid="task-1780795829474" data-boardstatus="inprogress">Start →</button><button class="board-status-btn" data-boarddone="task-1780795829474" style="color:var(--accent4);border-color:var(--accent4)">✓ Done</button></div></div></div></div><div class="board-col"><div class="board-col-header"><span class="board-col-dot" style="background:#f59e0b"></span><span class="board-col-title">In Progress</span><span class="board-col-count" style="background:rgba(245,158,11,0.12);color:#f59e0b">0</span></div><div class="board-col-tasks" id="boardcol-inprogress"><div class="board-empty">No tasks</div></div></div><div class="board-col"><div class="board-col-header"><span class="board-col-dot" style="background:#10b981"></span><span class="board-col-title">Done</span><span class="board-col-count" style="background:rgba(16,185,129,0.12);color:#10b981">1</span></div><div class="board-col-tasks" id="boardcol-done"><div class="board-card" data-boarddrawer="task-1780795708805"><div class="board-card-title">Test</div><div class="board-card-meta"><span class="task-tag" style="background:#f4623a22;color:#f4623a;border-color:#f4623a33;font-size:10px">🏠 Main House</span><span class="task-tag due" style="font-size:10px">📅 Jun 10</span></div><div class="board-card-actions"><button class="board-status-btn" data-boarddone="task-1780795708805" style="color:var(--text-dim)">↩ Undo</button></div></div></div></div></div>
+
+    <div class="quick-add" id="quick-add-bar" style="display: none;">
       <input type="text" id="quick-input" placeholder="Quick add… press Enter (private by default)" onkeydown="quickAdd(event)">
       <button class="btn btn-primary btn-sm" onclick="quickAddBtn()">Add</button>
     </div>
+
   </div>
 
   <!-- CALENDAR -->
@@ -929,6 +971,8 @@ var state = {
   selectedTagIds: [],
   tagFilter: null,
   filter: 'all',
+  showCompleted: true,
+  viewMode: 'list', // list | board
   subcatFilter: null,
   visFilter: 'all', // all | mine | shared
   catFilter: null,
@@ -1151,7 +1195,13 @@ function renderTasks() {
   }
 
   var html = activeTasks.map(taskHTML).join('');
-  if (doneTasks.length) html += '<div class="task-group-label">Completed ('+doneTasks.length+')</div>' + doneTasks.map(taskHTML).join('');
+  if (doneTasks.length) {
+    if (state.showCompleted) {
+      html += '<div class="task-group-label" style="display:flex;align-items:center;justify-content:space-between">Completed ('+doneTasks.length+') <span style="cursor:pointer;color:var(--accent);font-size:11px" onclick="toggleCompleted()">Hide</span></div>' + doneTasks.map(taskHTML).join('');
+    } else {
+      html += '<div class="task-group-label" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleCompleted()">'+doneTasks.length+' completed task'+(doneTasks.length===1?'':'s')+' hidden <span style="color:var(--accent);font-size:11px">Show ›</span></div>';
+    }
+  }
   list.innerHTML = html;
   list.querySelectorAll('[data-toggleid]').forEach(function(el){
     el.addEventListener('click', function(e){ e.stopPropagation(); toggleTask(el.dataset.toggleid); });
@@ -1187,7 +1237,7 @@ function quickAdd(e) { if (e.key === 'Enter') quickAddBtn(); }
 async function quickAddBtn() {
   var inp = document.getElementById('quick-input');
   var v = inp.value.trim(); if (!v) return;
-  var t = { id:'task-'+Date.now(), title:v, note:'', category: state.catFilter||'', due:'', reminder_time:'', priority:'normal', done:false, is_shared:false, owner:state.currentUser, created_at:Date.now(), comments:[] };
+  var t = { id:'task-'+Date.now(), title:v, note:'', category: state.catFilter||'', due:'', reminder_time:'', priority:'normal', done:false, status:'todo', is_shared:false, owner:state.currentUser, created_at:Date.now(), comments:[] };
   state.tasks.unshift(t); renderTasks(); inp.value = '';
   await supaInsert('focusd_tasks', { id:t.id, title:t.title, note:t.note, category:t.category, due:t.due, reminder_time:t.reminder_time, priority:t.priority, done:t.done, is_shared:t.is_shared, owner:t.owner, created_at:t.created_at });
   showToast('Task added ✓');
@@ -1252,10 +1302,10 @@ async function saveTask() {
     priority: document.getElementById('modal-priority').value,
     is_shared: document.getElementById('modal-shared').checked,
     tags: modalSelectedTags.join(','),
-    done: false, owner: state.currentUser, created_at: Date.now(), comments: []
+    done: false, status: 'todo', owner: state.currentUser, created_at: Date.now(), comments: []
   };
   state.tasks.unshift(t); renderTasks(); closeTaskModal();
-  await supaInsert('focusd_tasks', { id:t.id, title:t.title, note:t.note, category:t.category, subcategory:t.subcategory||'', due:t.due, reminder_time:t.reminder_time, priority:t.priority, done:t.done, is_shared:t.is_shared, tags:t.tags, owner:t.owner, created_at:t.created_at });
+  await supaInsert('focusd_tasks', { id:t.id, title:t.title, note:t.note, category:t.category, subcategory:t.subcategory||'', due:t.due, reminder_time:t.reminder_time, priority:t.priority, done:t.done, status:t.status||'todo', is_shared:t.is_shared, tags:t.tags, owner:t.owner, created_at:t.created_at });
   if (t.due && t.reminder_time && state.notifEnabled) scheduleNotif(t);
   showToast(t.is_shared ? 'Task shared with team ✓' : 'Task added (private) ✓');
 }
@@ -1575,6 +1625,120 @@ async function addTagFromSettings() {
   renderTagsSettings(); buildTagsNav();
   await supaInsert('focusd_tags', tag);
   showToast('#'+label+' added ✓');
+}
+
+// ── VIEW MODE ──
+function setViewMode(mode) {
+  state.viewMode = mode;
+  var listEls = ['tasks-toolbar', 'tag-filter-bar', 'tasks-list', 'quick-add-bar'];
+  var boardEl = document.getElementById('board-wrap');
+  var progressWrap = document.querySelector('.progress-bar-wrap');
+
+  if (mode === 'board') {
+    listEls.forEach(function(id) { var el = document.getElementById(id); if(el) el.style.display = 'none'; });
+    if (boardEl) boardEl.style.display = 'flex';
+    if (progressWrap) progressWrap.style.display = 'none';
+    document.getElementById('view-list-btn').classList.remove('active');
+    document.getElementById('view-board-btn').classList.add('active');
+    renderBoard();
+  } else {
+    listEls.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (id === 'tasks-toolbar') el.style.display = 'flex';
+      else if (id === 'tasks-list') el.style.display = '';
+      else if (id === 'quick-add-bar') el.style.display = 'flex';
+    });
+    if (boardEl) boardEl.style.display = 'none';
+    if (progressWrap) progressWrap.style.display = '';
+    document.getElementById('view-list-btn').classList.add('active');
+    document.getElementById('view-board-btn').classList.remove('active');
+    renderTasks();
+  }
+}
+
+function renderBoard() {
+  var wrap = document.getElementById('board-wrap');
+  if (!wrap) return;
+
+  var allTasks = getFilteredTasks();
+
+  var COLS = [
+    { id: 'todo',        label: 'To Do',       color: '#3b82f6', bg: 'rgba(59,130,246,0.12)' },
+    { id: 'inprogress',  label: 'In Progress',  color: '#f59e0b', bg: 'rgba(245,158,11,0.12)' },
+    { id: 'done',        label: 'Done',         color: '#10b981', bg: 'rgba(16,185,129,0.12)' },
+  ];
+
+  wrap.innerHTML = COLS.map(function(col) {
+    var tasks = allTasks.filter(function(t) {
+      if (col.id === 'done') return t.done;
+      if (col.id === 'todo') return !t.done && (t.status||'todo') === 'todo';
+      return !t.done && (t.status||'todo') === col.id;
+    });
+
+    var cards = tasks.length ? tasks.map(function(t) { return boardCardHTML(t, col); }).join('') 
+      : '<div class="board-empty">No tasks</div>';
+
+    return '<div class="board-col">' +
+      '<div class="board-col-header">' +
+        '<span class="board-col-dot" style="background:'+col.color+'"></span>' +
+        '<span class="board-col-title">'+col.label+'</span>' +
+        '<span class="board-col-count" style="background:'+col.bg+';color:'+col.color+'">'+tasks.length+'</span>' +
+      '</div>' +
+      '<div class="board-col-tasks" id="boardcol-'+col.id+'">'+cards+'</div>' +
+    '</div>';
+  }).join('');
+
+  // Attach card listeners
+  wrap.querySelectorAll('[data-boarddrawer]').forEach(function(el) {
+    el.addEventListener('click', function() { openDrawer(el.dataset.boarddrawer); });
+  });
+  wrap.querySelectorAll('[data-boardstatus]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      updateTaskStatus(el.dataset.boardid, el.dataset.boardstatus);
+    });
+  });
+  wrap.querySelectorAll('[data-boarddone]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleTask(el.dataset.boarddone);
+      renderBoard();
+    });
+  });
+}
+
+function boardCardHTML(t, col) {
+  var cat = getCat(t.category);
+  var catTag = cat ? '<span class="task-tag" style="background:'+cat.color+'22;color:'+cat.color+';border-color:'+cat.color+'33;font-size:10px">'+cat.icon+' '+cat.label+'</span>' : '';
+  var dueTag = t.due ? '<span class="task-tag due" style="font-size:10px">📅 '+new Date(t.due+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})+'</span>' : '';
+  var urgTag = t.priority==='urgent' ? '<span class="task-tag urgent" style="font-size:10px">🔥</span>' : '';
+  var commentCount = (t.comments||[]).length;
+
+  // Next status button
+  var nextBtn = '';
+  if (!t.done && (t.status||'todo') === 'todo') {
+    nextBtn = '<button class="board-status-btn" data-boardid="'+t.id+'" data-boardstatus="inprogress">Start →</button>';
+  } else if (!t.done && t.status === 'inprogress') {
+    nextBtn = '<button class="board-status-btn" data-boardid="'+t.id+'" data-boardstatus="todo">← Back</button>';
+  }
+  var doneBtn = !t.done
+    ? '<button class="board-status-btn" data-boarddone="'+t.id+'" style="color:var(--accent4);border-color:var(--accent4)">✓ Done</button>'
+    : '<button class="board-status-btn" data-boarddone="'+t.id+'" style="color:var(--text-dim)">↩ Undo</button>';
+
+  return '<div class="board-card" data-boarddrawer="'+t.id+'">' +
+    '<div class="board-card-title">'+esc(t.title)+'</div>' +
+    '<div class="board-card-meta">'+catTag+dueTag+urgTag+(commentCount>0?'<span class="comment-count">💬 '+commentCount+'</span>':'')+'</div>' +
+    '<div class="board-card-actions">'+nextBtn+doneBtn+'</div>' +
+  '</div>';
+}
+
+async function updateTaskStatus(id, status) {
+  var t = state.tasks.find(function(t){ return t.id===id; });
+  if (!t) return;
+  t.status = status;
+  renderBoard();
+  await supaUpdate('focusd_tasks', id, { status: status });
 }
 
 // ── NOTIFICATIONS ──
@@ -1997,6 +2161,14 @@ function closeCatPickerDirect() {
   document.getElementById('cat-picker-overlay').classList.remove('open');
 }
 
+
+// ── COMPLETED TOGGLE ──
+function toggleCompleted() {
+  state.showCompleted = !state.showCompleted;
+  var btn = document.getElementById('completed-toggle');
+  if (btn) btn.textContent = state.showCompleted ? '✓ Hide Done' : '✓ Show Done';
+  renderTasks();
+}
 
 // ── MOBILE NAV SYNC ──
 function syncMobileNav(el) {

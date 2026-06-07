@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)file:///Users/pato/Downloads/index_63.html -->
+<!-- saved from url=(0042)file:///Users/pato/Downloads/index_64.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -1079,7 +1079,7 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="lightbox-img" src="file:///Users/pato/Downloads/index_63.html" alt="">
+  <img id="lightbox-img" src="file:///Users/pato/Downloads/index_64.html" alt="">
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1092,8 +1092,18 @@ var HEADERS = { 'Content-Type': 'application/json', 'apikey': SUPA_KEY, 'Authori
 
 async function supaGet(table, filter) {
   var url = SUPA_URL + '/rest/v1/' + table + '?select=*' + (filter ? '&' + filter : '') + '&order=created_at.desc';
-  var r = await fetch(url, { headers: HEADERS });
-  return r.ok ? r.json() : [];
+  try {
+    var r = await fetch(url, { headers: HEADERS });
+    if (!r.ok) {
+      var err = await r.text();
+      console.error('Supabase error', r.status, table, err);
+      return [];
+    }
+    return r.json();
+  } catch(e) {
+    console.error('Supabase fetch failed:', e);
+    return [];
+  }
 }
 async function supaInsert(table, obj) {
   var r = await fetch(SUPA_URL + '/rest/v1/' + table, { method: 'POST', headers: { ...HEADERS, 'Prefer': 'return=representation' }, body: JSON.stringify(obj) });
@@ -1210,15 +1220,13 @@ async function loadAll() {
 
 async function loadTasks() {
   try {
-    // Load shared tasks + own private tasks
-    var shared = await supaGet('focusd_tasks', 'is_shared=eq.true');
-    var mine = await supaGet('focusd_tasks', 'is_shared=eq.false&owner=eq.' + encodeURIComponent(state.currentUser));
+    var allFetched = await supaGet('focusd_tasks', '');
     var comments = await supaGet('focusd_comments');
-    // Merge comments into tasks
-    var allTasks = [...(shared||[]), ...(mine||[])];
-    // Deduplicate (owner might have shared tasks)
-    var seen = new Set();
-    allTasks = allTasks.filter(t => { if (seen.has(t.id)) return false; seen.add(t.id); return true; });
+    console.log('Supabase returned', (allFetched||[]).length, 'tasks, currentUser:', state.currentUser);
+    var allTasks = (allFetched||[]).filter(function(t) {
+      return t.is_shared || t.owner === state.currentUser;
+    });
+    console.log('After filter:', allTasks.length, 'tasks visible');
     allTasks.forEach(t => {
       t.comments = (comments||[]).filter(c => c.task_id === t.id).sort((a,b) => a.ts - b.ts);
     });
@@ -1408,7 +1416,7 @@ async function quickAddBtn() {
   var v = inp.value.trim(); if (!v) return;
   var t = { id:'task-'+Date.now(), title:v, note:'', category: state.catFilter||'', due:'', reminder_time:'', priority:'normal', done:false, status:'todo', is_shared:false, owner:state.currentUser, created_at:Date.now(), comments:[] };
   state.tasks.unshift(t); renderTasks(); inp.value = '';
-  await supaInsert('focusd_tasks', { id:t.id, title:t.title, note:t.note, category:t.category, subcategory:t.subcategory||'', subcategory_label:t.subcategory_label||'', due:t.due, reminder_time:t.reminder_time, priority:t.priority, done:t.done, status:t.status||'todo', is_shared:t.is_shared, tags:t.tags||'', owner:t.owner, created_at:t.created_at });
+  await supaInsert('focusd_tasks', { id:t.id, title:t.title, note:t.note, category:t.category, subcategory:t.subcategory||'', subcategory_label:t.subcategory_label||'', due:t.due, reminder_time:t.reminder_time, priority:t.priority, done:t.done, status:t.status||'todo', is_shared:t.is_shared, tags:t.tags||'', attachments:t.attachments||[], owner:t.owner, created_at:t.created_at });
   showToast('Task added ✓');
 }
 
@@ -2394,13 +2402,19 @@ function handleDrawerAttachments(e) {
   var count = 0;
   files.forEach(function(f) {
     var r = new FileReader();
-    r.onload = function(ev) {
+    r.onload = async function(ev) {
       t.attachments.push({ name: f.name, type: f.type, data: ev.target.result });
       count++;
       if (count === files.length) {
         renderDrawerAttachments(t);
         renderTasks();
-        showToast(files.length + ' file(s) added');
+        // Save attachments to Supabase
+        try {
+          await supaUpdate('focusd_tasks', t.id, { attachments: t.attachments });
+          showToast(files.length + ' file(s) added ✓');
+        } catch(err) {
+          showToast(files.length + ' file(s) added (local only)');
+        }
       }
     };
     r.readAsDataURL(f);
@@ -2576,13 +2590,19 @@ function handleDrawerAttachments(e) {
   var count = 0;
   files.forEach(function(f) {
     var r = new FileReader();
-    r.onload = function(ev) {
+    r.onload = async function(ev) {
       t.attachments.push({ name: f.name, type: f.type, data: ev.target.result });
       count++;
       if (count === files.length) {
         renderDrawerAttachments(t);
         renderTasks();
-        showToast(files.length + ' file(s) added');
+        // Save attachments to Supabase
+        try {
+          await supaUpdate('focusd_tasks', t.id, { attachments: t.attachments });
+          showToast(files.length + ' file(s) added ✓');
+        } catch(err) {
+          showToast(files.length + ' file(s) added (local only)');
+        }
       }
     };
     r.readAsDataURL(f);

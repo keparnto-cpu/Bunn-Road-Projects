@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)file:///Users/pato/Downloads/index_37.html -->
+<!-- saved from url=(0042)file:///Users/pato/Downloads/index_39.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -684,7 +684,7 @@
     </div>
     <div class="progress-bar-wrap">
       <div class="progress-info"><span id="progress-label">0 of 0 done</span><span id="progress-pct">0%</span></div>
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 0%;"></div></div>
     </div>
     <!-- MOBILE CATEGORY PICKER -->
     <div class="cat-strip" id="cat-strip"><button class="cat-picker-btn has-filter" onclick="openCatPicker()"><span class="picker-icon">🏠</span><span class="picker-label">Main House › Gala's room</span><span class="picker-chevron">▾</span></button><button class="cat-picker-clear" onclick="clearCatFilter()" title="Clear">✕</button></div>
@@ -711,7 +711,7 @@
     <div class="board-wrap" id="board-wrap" style="display:none"></div>
 
     <div class="quick-add" id="quick-add-bar">
-      <input type="text" id="quick-input" placeholder="Quick add… press Enter (private by default)" onkeydown="quickAdd(event)">
+      <input type="text" id="quick-input" placeholder="Add task to 🏠 Gala&#39;s room…" onkeydown="quickAdd(event)">
       <button class="btn btn-primary btn-sm" onclick="quickAddBtn()">Add</button>
     </div>
 
@@ -866,8 +866,8 @@
     <h3>Edit Task</h3>
     <div class="form-row"><label>Task Title *</label><input class="form-input" id="edit-modal-title" placeholder="What needs to be done?"></div>
     <div class="form-row"><label>Notes</label><textarea class="form-input" id="edit-modal-note" placeholder="Details…"></textarea></div>
-    <div class="form-row"><label>Category</label><select class="form-input" id="edit-modal-category" onchange="updateEditSubcatDropdown()"><option value="">No category</option><option value="main-house">🏠 Main House</option><option value="pool">🏊 Pool Area</option><option value="garden">🌿 Garden</option><option value="carriage-k">🏡 Carriage House (Kristen)</option><option value="carriage-g">🛎 Carriage House (Guest)</option><option value="garage1">🚗 Garage 1</option><option value="garage2">🚙 Garage 2</option><option value="barn">🐎 Barn</option><option value="grounds">🌳 Grounds</option></select></div>
-    <div class="form-row" id="edit-modal-subcat-row" style=""><label>Subcategory</label><select class="form-input" id="edit-modal-subcategory"><option value="">No subcategory</option><option value="sub-1780798138731">Gala's room</option><option value="sub-1780798131464">Kern's office</option><option value="sub-1780798127547">Bar</option><option value="sub-1780798114764">General</option><option value="sub-1780798107831">Foyer "hers' powder room</option><option value="sub-1780798097169">Foyer "his" Powder room</option><option value="sub-1780798066323">Main Bedroom</option><option value="sub-1780798060871">Morning Room</option><option value="sub-1780798057074">Living Room</option><option value="sub-1780798052900">TV Room</option><option value="sub-1780798042943">Dining Room</option><option value="sub-1780798039197">Mud Room</option><option value="sub-1780798035706">Laundry Room</option><option value="sub-1780788961777">Gym</option><option value="sub-1780788957394">Pato's office</option><option value="sub-1780788951343">Guest Bedroom</option><option value="sub-1780788938859">Pink Room</option><option value="sub-1780788930047">Blue Room</option><option value="sub-1780788922310">Pantry</option><option value="sub-1780788918893">Kitchen</option></select></div>
+    <div class="form-row"><label>Category</label><select class="form-input" id="edit-modal-category" onchange="updateEditSubcatDropdown()"><option value="">No category</option></select></div>
+    <div class="form-row" id="edit-modal-subcat-row" style="display:none"><label>Subcategory</label><select class="form-input" id="edit-modal-subcategory"><option value="">No subcategory</option></select></div>
     <div class="form-row-2">
       <div class="form-row"><label>Due Date</label><input class="form-input" type="date" id="edit-modal-due"></div>
       <div class="form-row"><label>Reminder Time</label><input class="form-input" type="time" id="edit-modal-time"></div>
@@ -1200,6 +1200,20 @@ function renderTasks() {
   document.getElementById('badge-tasks').textContent = active;
   renderTagFilterBar();
   renderCatStrip();
+  // Update quick-add placeholder to show context
+  var qinp = document.getElementById('quick-input');
+  if (qinp) {
+    if (state.subcatFilter) {
+      var activeSub2 = state.subcategories.find(function(s){ return s.id === state.subcatFilter; });
+      var activeCat2 = state.catFilter ? CATEGORIES.find(function(c){ return c.id === state.catFilter; }) : null;
+      qinp.placeholder = 'Add task to ' + (activeCat2 ? activeCat2.icon+' ' : '') + (activeSub2 ? activeSub2.label : '') + '…';
+    } else if (state.catFilter) {
+      var activeCat3 = CATEGORIES.find(function(c){ return c.id === state.catFilter; });
+      qinp.placeholder = 'Add task to ' + (activeCat3 ? activeCat3.icon+' '+activeCat3.label : 'category') + '…';
+    } else {
+      qinp.placeholder = 'Quick add… press Enter';
+    }
+  }
 
   if (!tasks.length) {
     list.innerHTML = '<div class="empty-state"><div class="ei">✨</div><p>No tasks here.<br>Add one above!</p></div>';
@@ -1285,44 +1299,40 @@ function quickAdd(e) { if (e.key === 'Enter') quickAddBtn(); }
 async function quickAddBtn() {
   var inp = document.getElementById('quick-input');
   var v = inp.value.trim(); if (!v) return;
-  var t = { id:'task-'+Date.now(), title:v, note:'', category: state.catFilter||'', due:'', reminder_time:'', priority:'normal', done:false, status:'todo', is_shared:false, owner:state.currentUser, created_at:Date.now(), comments:[] };
-  state.tasks.unshift(t); renderTasks(); inp.value = '';
-  await supaInsert('focusd_tasks', { id:t.id, title:t.title, note:t.note, category:t.category, due:t.due, reminder_time:t.reminder_time, priority:t.priority, done:t.done, is_shared:t.is_shared, owner:t.owner, created_at:t.created_at });
+  var activeSub = state.subcatFilter ? state.subcategories.find(function(s){ return s.id === state.subcatFilter; }) : null;
+  var t = {
+    id: 'task-'+Date.now(),
+    title: v,
+    note: '',
+    category: state.catFilter || '',
+    subcategory: state.subcatFilter || '',
+    subcategory_label: activeSub ? activeSub.label : '',
+    due: '', reminder_time: '',
+    priority: 'normal',
+    done: false,
+    status: 'todo',
+    is_shared: false,
+    tags: '',
+    owner: state.currentUser,
+    created_at: Date.now(),
+    comments: []
+  };
+  state.tasks.unshift(t);
+  renderTasks();
+  if (state.viewMode === 'board') renderBoard();
+  inp.value = '';
+  await supaInsert('focusd_tasks', {
+    id: t.id, title: t.title, note: t.note,
+    category: t.category, subcategory: t.subcategory,
+    subcategory_label: t.subcategory_label,
+    due: t.due, reminder_time: t.reminder_time,
+    priority: t.priority, done: t.done, status: t.status,
+    is_shared: t.is_shared, tags: t.tags,
+    owner: t.owner, created_at: t.created_at
+  });
   showToast('Task added ✓');
 }
 
-function buildModalCats() {
-  document.getElementById('modal-category').innerHTML = '<option value="">No category</option>' +
-    CATEGORIES.map(c=>'<option value="'+c.id+'">'+c.icon+' '+c.label+'</option>').join('');
-  // Pre-select catFilter if active
-  if (state.catFilter) {
-    document.getElementById('modal-category').value = state.catFilter;
-    updateSubcatDropdown();
-  } else {
-    document.getElementById('modal-subcategory').innerHTML = '<option value="">No subcategory</option>';
-    document.getElementById('modal-subcat-row').style.display = 'none';
-  }
-}
-
-function updateSubcatDropdown() {
-  var catId = document.getElementById('modal-category').value;
-  var row = document.getElementById('modal-subcat-row');
-  var sel = document.getElementById('modal-subcategory');
-  if (!catId) { row.style.display = 'none'; return; }
-  var subs = state.subcategories.filter(s => s.category_id === catId);
-  // Always show the row when a category is picked
-  row.style.display = '';
-  if (!subs.length) {
-    sel.innerHTML = '<option value="">No subcategories yet — add in Settings</option>';
-  } else {
-    sel.innerHTML = '<option value="">No subcategory</option>' + subs.map(s => '<option value="'+s.id+'">'+esc(s.label)+'</option>').join('');
-  }
-}
-function updateVisLabel() {
-  var shared = document.getElementById('modal-shared').checked;
-  document.getElementById('vis-label-text').textContent = shared ? '👥 Shared — your team can see this' : '🔒 Private — only you can see this';
-  document.getElementById('vis-sub-text').textContent = shared ? 'Team members can comment on this task' : 'Toggle to share with your team';
-}
 function openTaskModal() {
   buildModalCats();
   ['modal-title','modal-note','modal-due','modal-time'].forEach(id=>document.getElementById(id).value='');
@@ -1338,7 +1348,8 @@ async function saveTask() {
   var title = document.getElementById('modal-title').value.trim();
   if (!title) { showToast('Please enter a title'); return; }
   var subcatId = document.getElementById('modal-subcategory').value;
-  var subcatLabel = subcatId ? (state.subcategories.find(s=>s.id===subcatId)||{}).label||'' : '';
+  var subcatObj = subcatId ? state.subcategories.find(function(s){ return s.id === subcatId; }) : null;
+  var subcatLabel = subcatObj ? subcatObj.label : '';
   var t = {
     id:'task-'+Date.now(), title,
     note: document.getElementById('modal-note').value.trim(),
@@ -1499,7 +1510,6 @@ function openTaskModal() {
   buildModalCats();
   ['modal-title','modal-note','modal-due','modal-time'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('modal-category').value = state.catFilter||'';
-  if (state.catFilter) updateSubcatDropdown(); 
   document.getElementById('modal-priority').value = 'normal';
   document.getElementById('modal-shared').checked = false;
   updateVisLabel();
@@ -1507,8 +1517,18 @@ function openTaskModal() {
   renderModalTags();
   document.getElementById('modal-tag-input').value = '';
   document.getElementById('tag-suggestions').style.display = 'none';
+  // Pre-select subcategory if active
+  if (state.catFilter) {
+    updateSubcatDropdown();
+    if (state.subcatFilter) {
+      setTimeout(function(){
+        var sel = document.getElementById('modal-subcategory');
+        if (sel) sel.value = state.subcatFilter;
+      }, 50);
+    }
+  }
   document.getElementById('task-modal').classList.add('open');
-  setTimeout(()=>document.getElementById('modal-title').focus(),100);
+  setTimeout(function(){ document.getElementById('modal-title').focus(); }, 100);
 }
 
 function renderModalTags() {

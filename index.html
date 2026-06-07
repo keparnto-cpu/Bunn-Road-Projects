@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)file:///Users/pato/Downloads/index_25.html -->
+<!-- saved from url=(0042)file:///Users/pato/Downloads/index_26.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -325,17 +325,68 @@
   .empty-state .ei { font-size: 36px; margin-bottom: 10px; }
   .empty-state p { font-size: 13px; }
 
-  @media (max-width: 680px) {
-    .sidebar { width: 56px; min-width: 56px; }
-    .logo p, .nav-label, .nav-item span:not(.icon), .nav-item .badge, .user-name, .user-change { display: none; }
-    .user-chip { justify-content: center; padding: 6px; }
-    .nav-item { justify-content: center; padding: 10px; }
-    .sidebar-footer { padding: 10px; }
-    .panel-header, .tasks-toolbar, .tasks-list, .quick-add, .files-wrap, .vendors-wrap { padding-left: 14px; padding-right: 14px; }
-    .calendar-wrap { flex-direction: column; padding: 14px; }
+  @media (max-width: 768px) {
+    /* Sidebar collapses to bottom nav on mobile */
+    body { flex-direction: column; }
+    .sidebar {
+      width: 100% !important;
+      min-width: 100% !important;
+      height: 64px;
+      min-height: 64px;
+      flex-direction: row;
+      padding: 0;
+      border-right: none;
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+      order: 2;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: var(--sidebar-bg);
+    }
+    .main { order: 1; padding-bottom: 64px; }
+    .logo, .user-chip, .nav-label, .nav-section:not(#mobile-nav-section),
+    .sidebar-footer, #tags-nav-section, .cat-group-header span:not(.icon),
+    .cat-group, #cat-nav, .nav-item .badge, .user-name, .user-change { display: none !important; }
+    #mobile-nav-section {
+      display: flex !important;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+      padding: 0 8px;
+      gap: 0;
+    }
+    #mobile-nav-section .nav-item {
+      flex-direction: column;
+      gap: 2px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 10px;
+      color: var(--text-muted);
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+    #mobile-nav-section .nav-item .icon { font-size: 20px; width: auto; }
+    #mobile-nav-section .nav-item .mobile-label { display: block; font-size: 10px; }
+    #mobile-nav-section .nav-item.active { background: rgba(244,98,58,0.12); color: var(--accent); }
+
+    /* Content areas */
+    .panel-header { padding: 14px 16px 10px; }
+    .tasks-toolbar { padding: 10px 16px 0; }
+    .tasks-list { padding: 8px 16px; }
+    .quick-add { padding: 10px 16px; }
+    .files-wrap, .vendors-wrap, .settings-wrap { padding: 14px 16px; }
+    .calendar-wrap { flex-direction: column; padding: 14px 16px; gap: 16px; }
     .calendar-sidebar { width: 100%; }
     .vendors-grid { grid-template-columns: 1fr; }
     .drawer { width: 100%; }
+    .modal { padding: 20px; }
+    .form-row-2 { grid-template-columns: 1fr; }
+    .progress-bar-wrap { padding: 8px 16px 2px; }
   }
 </style>
 </head>
@@ -381,6 +432,25 @@
     <div class="nav-label">Categories</div>
     <div id="cat-nav"><div class="cat-group" id="catgroup-main-house"><div class="cat-group-header" id="catnav-main-house" data-catid="main-house"><span class="cat-dot" style="background:#f4623a"></span><span>Main House</span><span class="nav-item badge" style="background:#f4623a22;color:#f4623a;border:none">7</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div class="cat-sub-item" id="subnav-sub-1780788961777" data-cat="main-house" data-sub="sub-1780788961777" data-label="Gym"><span class="cat-sub-dot" style="background:#f4623a"></span><span>Gym</span></div><div class="cat-sub-item" id="subnav-sub-1780788957394" data-cat="main-house" data-sub="sub-1780788957394" data-label="Pato&#39;s office"><span class="cat-sub-dot" style="background:#f4623a"></span><span>Pato's office</span></div><div class="cat-sub-item" id="subnav-sub-1780788951343" data-cat="main-house" data-sub="sub-1780788951343" data-label="Guest Bedroom"><span class="cat-sub-dot" style="background:#f4623a"></span><span>Guest Bedroom</span></div><div class="cat-sub-item" id="subnav-sub-1780788938859" data-cat="main-house" data-sub="sub-1780788938859" data-label="Pink Room"><span class="cat-sub-dot" style="background:#f4623a"></span><span>Pink Room</span></div><div class="cat-sub-item" id="subnav-sub-1780788930047" data-cat="main-house" data-sub="sub-1780788930047" data-label="Blue Room"><span class="cat-sub-dot" style="background:#f4623a"></span><span>Blue Room</span></div><div class="cat-sub-item" id="subnav-sub-1780788922310" data-cat="main-house" data-sub="sub-1780788922310" data-label="Pantry"><span class="cat-sub-dot" style="background:#f4623a"></span><span>Pantry</span></div><div class="cat-sub-item" id="subnav-sub-1780788918893" data-cat="main-house" data-sub="sub-1780788918893" data-label="Kitchen"><span class="cat-sub-dot" style="background:#f4623a"></span><span>Kitchen</span></div></div></div><div class="cat-group" id="catgroup-pool"><div class="cat-group-header" id="catnav-pool" data-catid="pool"><span class="cat-dot" style="background:#3b82f6"></span><span>Pool Area</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-garden"><div class="cat-group-header" id="catnav-garden" data-catid="garden"><span class="cat-dot" style="background:#10b981"></span><span>Garden</span><span class="nav-item badge" style="background:#10b98122;color:#10b981;border:none">3</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div class="cat-sub-item" id="subnav-sub-1780790609847" data-cat="garden" data-sub="sub-1780790609847" data-label="Rest of Garden"><span class="cat-sub-dot" style="background:#10b981"></span><span>Rest of Garden</span></div><div class="cat-sub-item" id="subnav-sub-1780790596996" data-cat="garden" data-sub="sub-1780790596996" data-label="Pool Garden"><span class="cat-sub-dot" style="background:#10b981"></span><span>Pool Garden</span></div><div class="cat-sub-item" id="subnav-sub-1780790589838" data-cat="garden" data-sub="sub-1780790589838" data-label="Front garden by the Kitchen"><span class="cat-sub-dot" style="background:#10b981"></span><span>Front garden by the Kitchen</span></div></div></div><div class="cat-group" id="catgroup-carriage-k"><div class="cat-group-header" id="catnav-carriage-k" data-catid="carriage-k"><span class="cat-dot" style="background:#8b5cf6"></span><span>Carriage House (Kristen)</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-carriage-g"><div class="cat-group-header" id="catnav-carriage-g" data-catid="carriage-g"><span class="cat-dot" style="background:#ec4899"></span><span>Carriage House (Guest)</span><span class="nav-item badge" style="background:#ec489922;color:#ec4899;border:none">6</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div class="cat-sub-item" id="subnav-sub-1780790749814" data-cat="carriage-g" data-sub="sub-1780790749814" data-label="Patio"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Patio</span></div><div class="cat-sub-item" id="subnav-sub-1780790639580" data-cat="carriage-g" data-sub="sub-1780790639580" data-label="Living Room"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Living Room</span></div><div class="cat-sub-item" id="subnav-sub-1780790634297" data-cat="carriage-g" data-sub="sub-1780790634297" data-label="Kitchen"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Kitchen</span></div><div class="cat-sub-item" id="subnav-sub-1780790631181" data-cat="carriage-g" data-sub="sub-1780790631181" data-label="Bathroom"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Bathroom</span></div><div class="cat-sub-item" id="subnav-sub-1780790625380" data-cat="carriage-g" data-sub="sub-1780790625380" data-label="Beddroom 2"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Beddroom 2</span></div><div class="cat-sub-item" id="subnav-sub-1780790620800" data-cat="carriage-g" data-sub="sub-1780790620800" data-label="Bedroom 1"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Bedroom 1</span></div></div></div><div class="cat-group" id="catgroup-garage1"><div class="cat-group-header" id="catnav-garage1" data-catid="garage1"><span class="cat-dot" style="background:#f59e0b"></span><span>Garage 1</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-garage2"><div class="cat-group-header" id="catnav-garage2" data-catid="garage2"><span class="cat-dot" style="background:#d97706"></span><span>Garage 2</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-barn"><div class="cat-group-header" id="catnav-barn" data-catid="barn"><span class="cat-dot" style="background:#92400e"></span><span>Barn</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-grounds"><div class="cat-group-header" id="catnav-grounds" data-catid="grounds"><span class="cat-dot" style="background:#065f46"></span><span>Grounds</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div></div>
   </div>
+  <!-- MOBILE BOTTOM NAV -->
+  <div class="nav-section" id="mobile-nav-section">
+    <div class="nav-item active" id="mobile-nav-tasks" onclick="switchPanel(&#39;tasks&#39;,this);syncMobileNav(this)">
+      <span class="icon">✓</span><span class="mobile-label">Tasks</span>
+    </div>
+    <div class="nav-item" id="mobile-nav-calendar" onclick="switchPanel(&#39;calendar&#39;,this);syncMobileNav(this)">
+      <span class="icon">📅</span><span class="mobile-label">Calendar</span>
+    </div>
+    <div class="nav-item" id="mobile-nav-files" onclick="switchPanel(&#39;files&#39;,this);syncMobileNav(this)">
+      <span class="icon">📁</span><span class="mobile-label">Files</span>
+    </div>
+    <div class="nav-item" id="mobile-nav-vendors" onclick="switchPanel(&#39;vendors&#39;,this);syncMobileNav(this)">
+      <span class="icon">📋</span><span class="mobile-label">Vendors</span>
+    </div>
+    <div class="nav-item" id="mobile-nav-settings" onclick="switchPanel(&#39;settings&#39;,this);syncMobileNav(this)">
+      <span class="icon">⚙️</span><span class="mobile-label">Settings</span>
+    </div>
+  </div>
+
   <div class="sidebar-footer">
     <button class="footer-btn" id="notif-btn" onclick="toggleNotifications()">🔔 Notifications</button>
   </div>
@@ -1615,6 +1685,12 @@ async function deleteSubcat(id, catId) {
   if (card) card.classList.add('open');
   await supaDelete('focusd_subcategories', id);
   showToast('Subcategory removed');
+}
+
+// ── MOBILE NAV SYNC ──
+function syncMobileNav(el) {
+  document.querySelectorAll('#mobile-nav-section .nav-item').forEach(function(n){ n.classList.remove('active'); });
+  if (el) el.classList.add('active');
 }
 
 // ── UTILS ──

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)file:///Users/pato/Downloads/index_40.html -->
+<!-- saved from url=(0042)file:///Users/pato/Downloads/index_42.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -107,6 +107,22 @@
   .task-tag.private { background: rgba(160,160,160,0.1); color: #888; border-color: rgba(160,160,160,0.2); }
   .task-tag.shared { background: rgba(16,185,129,0.1); color: #059669; border-color: rgba(16,185,129,0.2); }
   .comment-count { font-size: 11px; color: var(--text-dim); display: flex; align-items: center; gap: 3px; }
+
+  /* ATTACHMENTS & INLINE COMMENTS */
+  .task-attachments { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .task-attachment-thumb { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border); cursor: pointer; }
+  .task-attachment-file { display: flex; align-items: center; gap: 4px; padding: 3px 8px; background: var(--surface2); border-radius: 6px; font-size: 11px; color: var(--text-muted); cursor: pointer; border: 1px solid var(--border-soft); }
+  .task-attachment-file:hover { border-color: var(--accent); color: var(--accent); }
+  .attach-btn { display: flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 8px; border: 1px dashed var(--border); background: transparent; cursor: pointer; color: var(--text-dim); font-size: 12px; font-family: 'Nunito', sans-serif; transition: all 0.15s; }
+  .attach-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(59,130,246,0.05); }
+
+  .task-comments-preview { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 5px; }
+  .task-comment-preview { display: flex; gap: 7px; align-items: flex-start; }
+  .task-comment-avatar { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: white; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .task-comment-bubble { background: var(--surface2); border-radius: 8px; padding: 5px 9px; flex: 1; }
+  .task-comment-bubble-author { font-size: 10px; font-weight: 600; color: var(--accent); margin-bottom: 1px; }
+  .task-comment-bubble-text { font-size: 12px; color: var(--text); line-height: 1.4; }
+  .task-comment-bubble-time { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
 
   /* BOARD VIEW */
   .board-wrap { flex: 1; overflow-x: auto; overflow-y: hidden; display: flex; gap: 16px; padding: 16px 28px; -webkit-overflow-scrolling: touch; }
@@ -515,7 +531,7 @@
   .empty-state p { font-size: 13px; }
 
   @media (max-width: 768px) {
-    * { max-width: 100vw; }
+    *:not(.fab):not(.modal-overlay):not(.cat-picker-sheet-overlay):not(.drawer):not(.drawer-overlay) { max-width: 100vw; }
     /* Sidebar collapses to bottom nav on mobile */
     body { flex-direction: column; }
     .sidebar {
@@ -621,8 +637,8 @@
     <p>Property Hub</p>
   </div>
   <div class="user-chip" id="user-chip">
-    <div class="user-avatar" id="user-avatar">P</div>
-    <span class="user-name" id="user-name-display">Pato</span>
+    <div class="user-avatar" id="user-avatar">?</div>
+    <span class="user-name" id="user-name-display">…</span>
     <span class="user-change" onclick="changeName()" title="Change name">✎</span>
   </div>
   <div class="nav-section">
@@ -637,11 +653,11 @@
   </div>
   <div class="nav-section" id="tags-nav-section">
     <div class="nav-label">Tags</div>
-    <div id="tags-nav"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No tags yet</div></div>
+    <div id="tags-nav"></div>
   </div>
   <div class="nav-section">
     <div class="nav-label">Categories</div>
-    <div id="cat-nav"><div class="cat-group" id="catgroup-main-house"><div class="cat-group-header" id="catnav-main-house" data-catid="main-house"><span class="cat-dot" style="background:#3b82f6"></span><span>Main House</span><span class="nav-item badge" style="background:#3b82f622;color:#3b82f6;border:none">20</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div class="cat-sub-item" id="subnav-sub-1780798138731" data-cat="main-house" data-sub="sub-1780798138731" data-label="Gala&#39;s room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Gala's room</span></div><div class="cat-sub-item" id="subnav-sub-1780798131464" data-cat="main-house" data-sub="sub-1780798131464" data-label="Kern&#39;s office"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Kern's office</span></div><div class="cat-sub-item" id="subnav-sub-1780798127547" data-cat="main-house" data-sub="sub-1780798127547" data-label="Bar"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Bar</span></div><div class="cat-sub-item" id="subnav-sub-1780798114764" data-cat="main-house" data-sub="sub-1780798114764" data-label="General"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>General</span></div><div class="cat-sub-item" id="subnav-sub-1780798107831" data-cat="main-house" data-sub="sub-1780798107831" data-label="Foyer &quot;hers&#39; powder room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Foyer "hers' powder room</span></div><div class="cat-sub-item" id="subnav-sub-1780798097169" data-cat="main-house" data-sub="sub-1780798097169" data-label="Foyer &quot;his&quot; Powder room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Foyer "his" Powder room</span></div><div class="cat-sub-item" id="subnav-sub-1780798066323" data-cat="main-house" data-sub="sub-1780798066323" data-label="Main Bedroom"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Main Bedroom</span></div><div class="cat-sub-item" id="subnav-sub-1780798060871" data-cat="main-house" data-sub="sub-1780798060871" data-label="Morning Room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Morning Room</span></div><div class="cat-sub-item" id="subnav-sub-1780798057074" data-cat="main-house" data-sub="sub-1780798057074" data-label="Living Room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Living Room</span></div><div class="cat-sub-item" id="subnav-sub-1780798052900" data-cat="main-house" data-sub="sub-1780798052900" data-label="TV Room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>TV Room</span></div><div class="cat-sub-item" id="subnav-sub-1780798042943" data-cat="main-house" data-sub="sub-1780798042943" data-label="Dining Room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Dining Room</span></div><div class="cat-sub-item" id="subnav-sub-1780798039197" data-cat="main-house" data-sub="sub-1780798039197" data-label="Mud Room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Mud Room</span></div><div class="cat-sub-item" id="subnav-sub-1780798035706" data-cat="main-house" data-sub="sub-1780798035706" data-label="Laundry Room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Laundry Room</span></div><div class="cat-sub-item" id="subnav-sub-1780788961777" data-cat="main-house" data-sub="sub-1780788961777" data-label="Gym"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Gym</span></div><div class="cat-sub-item" id="subnav-sub-1780788957394" data-cat="main-house" data-sub="sub-1780788957394" data-label="Pato&#39;s office"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Pato's office</span></div><div class="cat-sub-item" id="subnav-sub-1780788951343" data-cat="main-house" data-sub="sub-1780788951343" data-label="Guest Bedroom"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Guest Bedroom</span></div><div class="cat-sub-item" id="subnav-sub-1780788938859" data-cat="main-house" data-sub="sub-1780788938859" data-label="Pink Room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Pink Room</span></div><div class="cat-sub-item" id="subnav-sub-1780788930047" data-cat="main-house" data-sub="sub-1780788930047" data-label="Blue Room"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Blue Room</span></div><div class="cat-sub-item" id="subnav-sub-1780788922310" data-cat="main-house" data-sub="sub-1780788922310" data-label="Pantry"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Pantry</span></div><div class="cat-sub-item" id="subnav-sub-1780788918893" data-cat="main-house" data-sub="sub-1780788918893" data-label="Kitchen"><span class="cat-sub-dot" style="background:#3b82f6"></span><span>Kitchen</span></div></div></div><div class="cat-group" id="catgroup-pool"><div class="cat-group-header" id="catnav-pool" data-catid="pool"><span class="cat-dot" style="background:#3b82f6"></span><span>Pool Area</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-garden"><div class="cat-group-header" id="catnav-garden" data-catid="garden"><span class="cat-dot" style="background:#10b981"></span><span>Garden</span><span class="nav-item badge" style="background:#10b98122;color:#10b981;border:none">3</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div class="cat-sub-item" id="subnav-sub-1780790609847" data-cat="garden" data-sub="sub-1780790609847" data-label="Rest of Garden"><span class="cat-sub-dot" style="background:#10b981"></span><span>Rest of Garden</span></div><div class="cat-sub-item" id="subnav-sub-1780790596996" data-cat="garden" data-sub="sub-1780790596996" data-label="Pool Garden"><span class="cat-sub-dot" style="background:#10b981"></span><span>Pool Garden</span></div><div class="cat-sub-item" id="subnav-sub-1780790589838" data-cat="garden" data-sub="sub-1780790589838" data-label="Front garden by the Kitchen"><span class="cat-sub-dot" style="background:#10b981"></span><span>Front garden by the Kitchen</span></div></div></div><div class="cat-group" id="catgroup-carriage-k"><div class="cat-group-header" id="catnav-carriage-k" data-catid="carriage-k"><span class="cat-dot" style="background:#8b5cf6"></span><span>Carriage House (Kristen)</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-carriage-g"><div class="cat-group-header" id="catnav-carriage-g" data-catid="carriage-g"><span class="cat-dot" style="background:#ec4899"></span><span>Carriage House (Guest)</span><span class="nav-item badge" style="background:#ec489922;color:#ec4899;border:none">6</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div class="cat-sub-item" id="subnav-sub-1780790749814" data-cat="carriage-g" data-sub="sub-1780790749814" data-label="Patio"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Patio</span></div><div class="cat-sub-item" id="subnav-sub-1780790639580" data-cat="carriage-g" data-sub="sub-1780790639580" data-label="Living Room"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Living Room</span></div><div class="cat-sub-item" id="subnav-sub-1780790634297" data-cat="carriage-g" data-sub="sub-1780790634297" data-label="Kitchen"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Kitchen</span></div><div class="cat-sub-item" id="subnav-sub-1780790631181" data-cat="carriage-g" data-sub="sub-1780790631181" data-label="Bathroom"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Bathroom</span></div><div class="cat-sub-item" id="subnav-sub-1780790625380" data-cat="carriage-g" data-sub="sub-1780790625380" data-label="Beddroom 2"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Beddroom 2</span></div><div class="cat-sub-item" id="subnav-sub-1780790620800" data-cat="carriage-g" data-sub="sub-1780790620800" data-label="Bedroom 1"><span class="cat-sub-dot" style="background:#ec4899"></span><span>Bedroom 1</span></div></div></div><div class="cat-group" id="catgroup-garage1"><div class="cat-group-header" id="catnav-garage1" data-catid="garage1"><span class="cat-dot" style="background:#f59e0b"></span><span>Garage 1</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-garage2"><div class="cat-group-header" id="catnav-garage2" data-catid="garage2"><span class="cat-dot" style="background:#d97706"></span><span>Garage 2</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-barn"><div class="cat-group-header" id="catnav-barn" data-catid="barn"><span class="cat-dot" style="background:#92400e"></span><span>Barn</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div><div class="cat-group" id="catgroup-grounds"><div class="cat-group-header" id="catnav-grounds" data-catid="grounds"><span class="cat-dot" style="background:#065f46"></span><span>Grounds</span><span class="cat-group-chevron">›</span></div><div class="cat-sublist"><div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div></div></div></div>
+    <div id="cat-nav"></div>
   </div>
   <!-- MOBILE BOTTOM NAV -->
   <div class="nav-section" id="mobile-nav-section">
@@ -675,7 +691,7 @@
     <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;overflow:hidden">
       <div>
         <h2 id="tasks-panel-title">✓ All Tasks</h2>
-        <div class="sub" id="tasks-date-header">Saturday, June 6</div>
+        <div class="sub" id="tasks-date-header"></div>
       </div>
       <div class="view-toggle">
         <button class="view-toggle-btn active" id="view-list-btn" onclick="setViewMode(&#39;list&#39;)">☰ List</button>
@@ -687,7 +703,7 @@
       <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     </div>
     <!-- MOBILE CATEGORY PICKER -->
-    <div class="cat-strip" id="cat-strip"><button class="cat-picker-btn " onclick="openCatPicker()"><span class="picker-icon">🏠</span><span class="picker-label">All Categories</span><span class="picker-chevron">▾</span></button></div>
+    <div class="cat-strip" id="cat-strip"></div>
 
     <div class="tasks-toolbar">
       <button class="filter-btn active" onclick="setFilter(&#39;all&#39;,this)">All</button>
@@ -706,12 +722,12 @@
       <div id="tag-filter-pills"></div>
       <button class="tag-filter-pill" onclick="clearTagFilter()" style="color:var(--text-dim)">✕ Clear</button>
     </div>
-    <div class="tasks-list" id="tasks-list"><div class="empty-state"><div class="ei">✨</div><p>No tasks here.<br>Add one above!</p></div></div>
+    <div class="tasks-list" id="tasks-list"></div>
     <!-- BOARD VIEW -->
     <div class="board-wrap" id="board-wrap" style="display:none"></div>
 
     <div class="quick-add" id="quick-add-bar">
-      <input type="text" id="quick-input" placeholder="Quick add… press Enter" onkeydown="quickAdd(event)">
+      <input type="text" id="quick-input" placeholder="Quick add… press Enter (private by default)" onkeydown="quickAdd(event)">
       <button class="btn btn-primary btn-sm" onclick="quickAddBtn()">Add</button>
     </div>
 
@@ -746,7 +762,7 @@
         <p>Drop files here or <span>browse</span></p>
       </div>
       <input type="file" id="file-input" multiple="" style="display:none" onchange="fileInputChange(event)">
-      <div class="files-grid" id="files-grid"><div class="empty-state" style="grid-column:1/-1"><div class="ei">📭</div><p>No files yet.</p></div></div>
+      <div class="files-grid" id="files-grid"></div>
     </div>
   </div>
 
@@ -837,6 +853,14 @@
         <input class="tag-input" id="modal-tag-input" placeholder="Type to search or create a tag…" oninput="tagInputChanged()" onkeydown="tagInputKeydown(event)" autocomplete="off">
         <div class="tag-suggestions" id="tag-suggestions" style="display:none"></div>
       </div>
+    </div>
+    <div class="form-row">
+      <label>Attachments</label>
+      <div class="task-attachments" id="modal-attachments-preview"></div>
+      <button type="button" class="attach-btn" onclick="document.getElementById(&#39;modal-attach-input&#39;).click()">
+        📎 Add photo or file
+      </button>
+      <input type="file" id="modal-attach-input" multiple="" accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx,.txt" style="display:none" onchange="handleModalAttachments(event)">
     </div>
     <div class="form-row">
       <label>Visibility</label>
@@ -1243,7 +1267,9 @@ function renderTasks() {
       '<div class="task-content" data-drawerid="'+t.id+'">' +
         '<div class="task-title">'+esc(t.title)+'</div>' +
         (t.note?'<div class="task-note">'+esc(t.note).substring(0,80)+(t.note.length>80?'…':'')+'</div>':'') +
-        '<div class="task-meta">'+catTag+urgTag+dueTag+getTaskTagPills(t)+visTag+cBadge+'</div>' +
+        '<div class="task-meta">'+catTag+urgTag+dueTag+getTaskTagPills(t)+visTag+'</div>' +
+        getTaskAttachmentsHTML(t) +
+        getTaskCommentsPreviewHTML(t) +
       '</div>' +
       '<div class="task-actions">' +
         '<button class="task-action-btn" data-drawerid="'+t.id+'" title="Comments">💬</button>' +
@@ -1361,6 +1387,7 @@ async function saveTask() {
     priority: document.getElementById('modal-priority').value,
     is_shared: document.getElementById('modal-shared').checked,
     tags: modalSelectedTags.join(','),
+    attachments: modalAttachments.slice(),
     done: false, status: 'todo', owner: state.currentUser, created_at: Date.now(), comments: []
   };
   state.tasks.unshift(t); renderTasks(); closeTaskModal();
@@ -1506,852 +1533,5 @@ function renderTagFilterBar() {
 // ── MODAL TAG LOGIC ──
 var modalSelectedTags = []; // array of tag ids
 
-function openTaskModal() {
-  buildModalCats();
-  ['modal-title','modal-note','modal-due','modal-time'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('modal-category').value = state.catFilter||'';
-  document.getElementById('modal-priority').value = 'normal';
-  document.getElementById('modal-shared').checked = false;
-  updateVisLabel();
-  modalSelectedTags = [];
-  renderModalTags();
-  document.getElementById('modal-tag-input').value = '';
-  document.getElementById('tag-suggestions').style.display = 'none';
-  // Pre-select subcategory if active
-  if (state.catFilter) {
-    updateSubcatDropdown();
-    if (state.subcatFilter) {
-      setTimeout(function(){
-        var sel = document.getElementById('modal-subcategory');
-        if (sel) sel.value = state.subcatFilter;
-      }, 50);
-    }
-  }
-  document.getElementById('task-modal').classList.add('open');
-  setTimeout(function(){ document.getElementById('modal-title').focus(); }, 100);
-}
 
-function renderModalTags() {
-  var wrap = document.getElementById('modal-tags-selected');
-  if (!wrap) return;
-  var html = '';
-  modalSelectedTags.forEach(function(id) {
-    var tag = state.tags.find(function(t){return t.id===id;});
-    if (!tag) return;
-    html += '<span class="tag-pill" style="background:'+tag.color+'22;color:'+tag.color+';border-color:'+tag.color+'33" data-tagid="'+id+'">' +
-      '#'+esc(tag.label)+'<span class="tag-x" data-removeid="'+id+'">✕</span></span>';
-  });
-  wrap.innerHTML = html;
-  wrap.querySelectorAll('.tag-x').forEach(function(el) {
-    el.addEventListener('click', function(e) {
-      e.stopPropagation();
-      removeModalTag(el.dataset.removeid);
-    });
-  });
-}
-
-function removeModalTag(id) {
-  modalSelectedTags = modalSelectedTags.filter(t=>t!==id);
-  renderModalTags();
-}
-
-function tagInputChanged() {
-  var val = document.getElementById('modal-tag-input').value.trim().toLowerCase();
-  var suggestions = document.getElementById('tag-suggestions');
-  if (!val) { suggestions.style.display='none'; return; }
-  var existing = state.tags.filter(function(t){ return t.label.toLowerCase().includes(val) && !modalSelectedTags.includes(t.id); });
-  var exactMatch = state.tags.find(function(t){ return t.label.toLowerCase()===val; });
-  var html = '';
-  existing.forEach(function(t) {
-    html += '<div class="tag-suggestion-item" data-tagid="'+t.id+'">' +
-      '<span class="tag-suggestion-dot" style="background:'+t.color+'"></span>#'+esc(t.label)+'</div>';
-  });
-  if (!exactMatch) {
-    html += '<div class="tag-suggestion-item tag-create-btn" style="color:var(--accent)">✚ Create "#'+esc(val)+'"</div>';
-  }
-  if (!html) html = '<div class="tag-suggestion-item" style="color:var(--text-dim)">No matches</div>';
-  suggestions.innerHTML = html;
-  suggestions.style.display = 'block';
-  // Attach listeners
-  suggestions.querySelectorAll('[data-tagid]').forEach(function(el) {
-    el.addEventListener('click', function() { selectModalTag(el.dataset.tagid); });
-  });
-  var createBtn = suggestions.querySelector('.tag-create-btn');
-  if (createBtn) createBtn.addEventListener('click', createAndSelectTag);
-}
-
-function tagInputKeydown(e) {
-  if (e.key === 'Enter') { e.preventDefault(); createAndSelectTag(); }
-  if (e.key === 'Escape') { document.getElementById('tag-suggestions').style.display='none'; }
-}
-
-function selectModalTag(id) {
-  if (!modalSelectedTags.includes(id)) modalSelectedTags.push(id);
-  document.getElementById('modal-tag-input').value = '';
-  document.getElementById('tag-suggestions').style.display = 'none';
-  renderModalTags();
-}
-
-async function createAndSelectTag() {
-  var val = document.getElementById('modal-tag-input').value.trim();
-  if (!val) return;
-  var existing = state.tags.find(t=>t.label.toLowerCase()===val.toLowerCase());
-  if (existing) { selectModalTag(existing.id); return; }
-  var color = TAG_COLORS[state.tags.length % TAG_COLORS.length];
-  var tag = { id:'tag-'+Date.now(), label:val, color, created_at:Date.now(), created_by:state.currentUser||'unknown' };
-  state.tags.push(tag);
-  buildTagsNav();
-  renderTagsSettings();
-  selectModalTag(tag.id);
-  await supaInsert('focusd_tags', tag);
-  showToast('#'+val+' tag created');
-}
-
-// Close tag suggestions on outside click
-document.addEventListener('click', function(e) {
-  var inp = document.getElementById('modal-tag-input');
-  var sug = document.getElementById('tag-suggestions');
-  if (inp && sug && !inp.contains(e.target) && !sug.contains(e.target)) sug.style.display='none';
-});
-
-// ── SETTINGS TAGS ──
-function renderTagsSettings() {
-  var list = document.getElementById('settings-tags-list');
-  var colorsEl = document.getElementById('new-tag-colors');
-  if (!list) return;
-  if (!state.tags.length) { list.innerHTML = '<div style="font-size:12px;color:var(--text-dim);padding:4px 0">No tags yet.</div>'; }
-  else { list.innerHTML = state.tags.map(tag => tagSettingsRowHTML(tag)).join(''); }
-  // Attach listeners
-  list.querySelectorAll('[data-cycleid]').forEach(function(el) { el.addEventListener('click', function(){ cycleTagColor(el.dataset.cycleid); }); });
-  list.querySelectorAll('[data-edittag]').forEach(function(el) { el.addEventListener('click', function(){ startEditTag(el.dataset.edittag); }); });
-  list.querySelectorAll('[data-deltag]').forEach(function(el) { el.addEventListener('click', function(){ deleteTag(el.dataset.deltag); }); });
-  if (colorsEl) {
-    var swatchHtml = '';
-    TAG_COLORS.forEach(function(c){ swatchHtml += '<div class="color-swatch'+(c===newTagColor?' selected':'')+'" style="background:'+c+'" data-color="'+c+'" title="'+c+'"></div>'; });
-    colorsEl.innerHTML = swatchHtml;
-    colorsEl.querySelectorAll('.color-swatch').forEach(function(el){ el.addEventListener('click', function(){ pickNewTagColor(el.dataset.color); }); });
-  }
-}
-
-function startEditTag(id) {
-  var tag = state.tags.find(function(t){return t.id===id;});
-  if (!tag) return;
-  var row = document.getElementById('tagrow-'+id);
-  row.innerHTML =
-    '<span class="tag-settings-dot" style="background:'+tag.color+'"></span>' +
-    '<input class="tag-settings-edit-input" id="edit-tag-'+id+'" value="'+esc(tag.label)+'">' +
-    '<button class="subcat-btn save" data-savetagid="'+id+'" title="Save">✓</button>' +
-    '<button class="subcat-btn" data-canceltag="1" title="Cancel">✕</button>';
-  var inp = document.getElementById('edit-tag-'+id);
-  if (inp) {
-    inp.focus();
-    inp.addEventListener('keydown', function(e){ if(e.key==='Enter') saveEditTag(id); if(e.key==='Escape') renderTagsSettings(); });
-  }
-  row.querySelector('[data-savetagid]').addEventListener('click', function(){ saveEditTag(id); });
-  row.querySelector('[data-canceltag]').addEventListener('click', renderTagsSettings);
-}
-
-async function saveEditTag(id) {
-  var inp = document.getElementById('edit-tag-'+id);
-  var label = inp ? inp.value.trim() : '';
-  if (!label) { showToast('Label cannot be empty'); return; }
-  var tag = state.tags.find(t=>t.id===id);
-  if (tag) tag.label = label;
-  renderTagsSettings(); buildTagsNav(); renderTasks();
-  await supaUpdate('focusd_tags', id, { label });
-  showToast('Tag renamed ✓');
-}
-
-async function deleteTag(id) {
-  state.tags = state.tags.filter(t=>t.id!==id);
-  // Remove from all tasks locally
-  state.tasks.forEach(t => { t.tags = (t.tags||'').split(',').filter(tid=>tid&&tid!==id).join(','); });
-  renderTagsSettings(); buildTagsNav(); renderTasks();
-  if (state.tagFilter===id) clearTagFilter();
-  await supaDelete('focusd_tags', id);
-  showToast('Tag removed');
-}
-
-function pickNewTagColor(color) { newTagColor = color; renderTagsSettings(); }
-
-async function cycleTagColor(id) {
-  var tag = state.tags.find(t=>t.id===id);
-  if (!tag) return;
-  var idx = (TAG_COLORS.indexOf(tag.color)+1) % TAG_COLORS.length;
-  tag.color = TAG_COLORS[idx];
-  renderTagsSettings(); buildTagsNav(); renderTasks();
-  await supaUpdate('focusd_tags', id, { color: tag.color });
-}
-
-async function addTagFromSettings() {
-  var inp = document.getElementById('new-tag-input');
-  var label = inp ? inp.value.trim() : '';
-  if (!label) return;
-  var tag = { id:'tag-'+Date.now(), label, color:newTagColor, created_at:Date.now(), created_by:state.currentUser||'unknown' };
-  state.tags.push(tag);
-  if (inp) inp.value = '';
-  renderTagsSettings(); buildTagsNav();
-  await supaInsert('focusd_tags', tag);
-  showToast('#'+label+' added ✓');
-}
-
-// ── VIEW MODE ──
-function setViewMode(mode) {
-  state.viewMode = mode;
-  var listEls = ['tasks-toolbar', 'tag-filter-bar', 'tasks-list', 'quick-add-bar'];
-  var boardEl = document.getElementById('board-wrap');
-  var progressWrap = document.querySelector('.progress-bar-wrap');
-
-  if (mode === 'board') {
-    listEls.forEach(function(id) { var el = document.getElementById(id); if(el) el.style.display = 'none'; });
-    if (boardEl) boardEl.style.display = 'flex';
-    if (progressWrap) progressWrap.style.display = 'none';
-    document.getElementById('view-list-btn').classList.remove('active');
-    document.getElementById('view-board-btn').classList.add('active');
-    renderBoard();
-  } else {
-    listEls.forEach(function(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      if (id === 'tasks-toolbar') el.style.display = 'flex';
-      else if (id === 'tasks-list') el.style.display = '';
-      else if (id === 'quick-add-bar') el.style.display = 'flex';
-    });
-    if (boardEl) boardEl.style.display = 'none';
-    if (progressWrap) progressWrap.style.display = '';
-    document.getElementById('view-list-btn').classList.add('active');
-    document.getElementById('view-board-btn').classList.remove('active');
-    renderTasks();
-  }
-}
-
-function renderBoard() {
-  var wrap = document.getElementById('board-wrap');
-  if (!wrap) return;
-
-  var allTasks = getFilteredTasks();
-
-  var COLS = [
-    { id: 'todo',        label: 'To Do',       color: '#3b82f6', bg: 'rgba(59,130,246,0.12)' },
-    { id: 'inprogress',  label: 'In Progress',  color: '#f59e0b', bg: 'rgba(245,158,11,0.12)' },
-    { id: 'done',        label: 'Done',         color: '#10b981', bg: 'rgba(16,185,129,0.12)' },
-  ];
-
-  wrap.innerHTML = COLS.map(function(col) {
-    var tasks = allTasks.filter(function(t) {
-      if (col.id === 'done') return t.done;
-      if (col.id === 'todo') return !t.done && (t.status||'todo') === 'todo';
-      return !t.done && (t.status||'todo') === col.id;
-    });
-
-    var cards = tasks.length ? tasks.map(function(t) { return boardCardHTML(t, col); }).join('') 
-      : '<div class="board-empty">No tasks</div>';
-
-    return '<div class="board-col">' +
-      '<div class="board-col-header">' +
-        '<span class="board-col-dot" style="background:'+col.color+'"></span>' +
-        '<span class="board-col-title">'+col.label+'</span>' +
-        '<span class="board-col-count" style="background:'+col.bg+';color:'+col.color+'">'+tasks.length+'</span>' +
-      '</div>' +
-      '<div class="board-col-tasks" id="boardcol-'+col.id+'">'+cards+'</div>' +
-    '</div>';
-  }).join('');
-
-  // Attach card listeners
-  wrap.querySelectorAll('[data-boarddrawer]').forEach(function(el) {
-    el.addEventListener('click', function() { openDrawer(el.dataset.boarddrawer); });
-  });
-  wrap.querySelectorAll('[data-boardstatus]').forEach(function(el) {
-    el.addEventListener('click', function(e) {
-      e.stopPropagation();
-      updateTaskStatus(el.dataset.boardid, el.dataset.boardstatus);
-    });
-  });
-  wrap.querySelectorAll('[data-boarddone]').forEach(function(el) {
-    el.addEventListener('click', function(e) {
-      e.stopPropagation();
-      toggleTask(el.dataset.boarddone);
-      renderBoard();
-    });
-  });
-}
-
-function boardCardHTML(t, col) {
-  var cat = getCat(t.category);
-  var catTag = cat ? '<span class="task-tag" style="background:'+cat.color+'22;color:'+cat.color+';border-color:'+cat.color+'33;font-size:10px">'+cat.icon+' '+cat.label+'</span>' : '';
-  var dueTag = t.due ? '<span class="task-tag due" style="font-size:10px">📅 '+new Date(t.due+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})+'</span>' : '';
-  var urgTag = t.priority==='urgent' ? '<span class="task-tag urgent" style="font-size:10px">🔥</span>' : '';
-  var commentCount = (t.comments||[]).length;
-
-  // Next status button
-  var nextBtn = '';
-  if (!t.done && (t.status||'todo') === 'todo') {
-    nextBtn = '<button class="board-status-btn" data-boardid="'+t.id+'" data-boardstatus="inprogress">Start →</button>';
-  } else if (!t.done && t.status === 'inprogress') {
-    nextBtn = '<button class="board-status-btn" data-boardid="'+t.id+'" data-boardstatus="todo">← Back</button>';
-  }
-  var doneBtn = !t.done
-    ? '<button class="board-status-btn" data-boarddone="'+t.id+'" style="color:var(--accent4);border-color:var(--accent4)">✓ Done</button>'
-    : '<button class="board-status-btn" data-boarddone="'+t.id+'" style="color:var(--text-dim)">↩ Undo</button>';
-
-  return '<div class="board-card" data-boarddrawer="'+t.id+'">' +
-    '<div class="board-card-title">'+esc(t.title)+'</div>' +
-    '<div class="board-card-meta">'+catTag+dueTag+urgTag+(commentCount>0?'<span class="comment-count">💬 '+commentCount+'</span>':'')+'</div>' +
-    '<div class="board-card-actions">'+nextBtn+doneBtn+'</div>' +
-  '</div>';
-}
-
-async function updateTaskStatus(id, status) {
-  var t = state.tasks.find(function(t){ return t.id===id; });
-  if (!t) return;
-  t.status = status;
-  renderBoard();
-  await supaUpdate('focusd_tasks', id, { status: status });
-}
-
-// ── EDIT TASK ──
-var editingTaskId = null;
-
-function openEditModal(id) {
-  var t = state.tasks.find(function(t){ return t.id === id; });
-  if (!t) return;
-  editingTaskId = id;
-
-  // Populate category dropdown
-  var catSel = document.getElementById('edit-modal-category');
-  catSel.innerHTML = '<option value="">No category</option>' +
-    CATEGORIES.map(function(c){ return '<option value="'+c.id+'">'+c.icon+' '+c.label+'</option>'; }).join('');
-
-  document.getElementById('edit-modal-title').value = t.title || '';
-  document.getElementById('edit-modal-note').value = t.note || '';
-  document.getElementById('edit-modal-due').value = t.due || '';
-  document.getElementById('edit-modal-time').value = t.reminder_time || '';
-  document.getElementById('edit-modal-priority').value = t.priority || 'normal';
-  document.getElementById('edit-modal-shared').checked = !!t.is_shared;
-  catSel.value = t.category || '';
-  updateEditSubcatDropdown(t.subcategory);
-  updateEditVisLabel();
-  document.getElementById('edit-task-modal').classList.add('open');
-  setTimeout(function(){ document.getElementById('edit-modal-title').focus(); }, 100);
-}
-
-function updateEditSubcatDropdown(selectedId) {
-  var catId = document.getElementById('edit-modal-category').value;
-  var row = document.getElementById('edit-modal-subcat-row');
-  var sel = document.getElementById('edit-modal-subcategory');
-  if (!catId) { row.style.display = 'none'; return; }
-  var subs = state.subcategories.filter(function(s){ return s.category_id === catId; });
-  row.style.display = '';
-  if (!subs.length) {
-    sel.innerHTML = '<option value="">No subcategories yet</option>';
-  } else {
-    sel.innerHTML = '<option value="">No subcategory</option>' + subs.map(function(s){
-      return '<option value="'+s.id+'"'+(selectedId===s.id?' selected':'')+'>'+esc(s.label)+'</option>';
-    }).join('');
-  }
-}
-
-function updateEditVisLabel() {
-  var shared = document.getElementById('edit-modal-shared').checked;
-  document.getElementById('edit-vis-label-text').textContent = shared ? '👥 Shared — your team can see this' : '🔒 Private — only you can see this';
-  document.getElementById('edit-vis-sub-text').textContent = shared ? 'Team members can comment on this task' : 'Toggle to share with your team';
-}
-
-function closeEditModal() {
-  document.getElementById('edit-task-modal').classList.remove('open');
-  editingTaskId = null;
-}
-
-async function saveEditTask() {
-  if (!editingTaskId) return;
-  var t = state.tasks.find(function(t){ return t.id === editingTaskId; });
-  if (!t) return;
-
-  var title = document.getElementById('edit-modal-title').value.trim();
-  if (!title) { showToast('Please enter a title'); return; }
-
-  var subcatId = document.getElementById('edit-modal-subcategory').value;
-  var sub = subcatId ? state.subcategories.find(function(s){ return s.id === subcatId; }) : null;
-
-  t.title = title;
-  t.note = document.getElementById('edit-modal-note').value.trim();
-  t.category = document.getElementById('edit-modal-category').value;
-  t.subcategory = subcatId || '';
-  t.subcategory_label = sub ? sub.label : '';
-  t.due = document.getElementById('edit-modal-due').value;
-  t.reminder_time = document.getElementById('edit-modal-time').value;
-  t.priority = document.getElementById('edit-modal-priority').value;
-  t.is_shared = document.getElementById('edit-modal-shared').checked;
-
-  closeEditModal();
-  renderTasks();
-  if (state.viewMode === 'board') renderBoard();
-
-  await supaUpdate('focusd_tasks', editingTaskId, {
-    title: t.title, note: t.note, category: t.category,
-    subcategory: t.subcategory, subcategory_label: t.subcategory_label,
-    due: t.due, reminder_time: t.reminder_time,
-    priority: t.priority, is_shared: t.is_shared
-  });
-  showToast('Task updated ✓');
-}
-
-// ── NOTIFICATIONS ──
-function toggleNotifications() {
-  if (!('Notification' in window)) { showToast('Notifications not supported'); return; }
-  if (state.notifEnabled) {
-    state.notifEnabled = false;
-    document.getElementById('notif-btn').classList.remove('notif-on');
-    document.getElementById('notif-btn').textContent = '🔔 Notifications';
-  } else {
-    Notification.requestPermission().then(p => {
-      if (p==='granted') {
-        state.notifEnabled = true;
-        document.getElementById('notif-btn').classList.add('notif-on');
-        document.getElementById('notif-btn').textContent = '🔔 On';
-        showToast('Notifications enabled ✓');
-        state.tasks.forEach(t=>{if(!t.done&&t.due&&t.reminder_time)scheduleNotif(t);});
-      } else showToast('Permission denied');
-    });
-  }
-}
-function scheduleNotif(task) {
-  if (!state.notifEnabled||!task.due||!task.reminder_time) return;
-  var when = new Date(task.due+'T'+task.reminder_time), ms = when-Date.now();
-  if (ms<0) return;
-  if (state.scheduledNotifs[task.id]) clearTimeout(state.scheduledNotifs[task.id]);
-  state.scheduledNotifs[task.id] = setTimeout(()=>{
-    if (Notification.permission==='granted') new Notification('Bunn Road Reminder',{body:task.title});
-  }, ms);
-}
-
-// ── CALENDAR ──
-var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-function renderCalendar() {
-  var y=state.calYear,m=state.calMonth;
-  document.getElementById('cal-month-title').textContent=MONTHS[m]+' '+y;
-  document.getElementById('cal-day-labels').innerHTML=DAYS.map(d=>'<div class="cal-day-label">'+d+'</div>').join('');
-  var first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
-  var today=new Date(),todayStr=today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
-  var eventDates=new Set([...state.events.map(e=>e.date),...state.tasks.filter(t=>t.due).map(t=>t.due)]);
-  var cells='',prevDays=new Date(y,m,0).getDate();
-  for(var i=first-1;i>=0;i--) cells+='<div class="cal-cell other-month">'+(prevDays-i)+'</div>';
-  for(var d=1;d<=days;d++){var ds=y+'-'+pad(m+1)+'-'+pad(d);cells+='<div class="cal-cell'+(ds===todayStr?' today':'')+(eventDates.has(ds)?' has-events':'')+'" onclick="calDayClick(\''+ds+'\')">'+d+'</div>';}
-  var rem=(Math.ceil((first+days)/7)*7)-(first+days);
-  for(var r=1;r<=rem;r++) cells+='<div class="cal-cell other-month">'+r+'</div>';
-  document.getElementById('cal-grid').innerHTML=cells;
-  renderUpcoming();
-}
-function renderUpcoming() {
-  var today=new Date();today.setHours(0,0,0,0);
-  var all=[...state.events.filter(e=>new Date(e.date+'T00:00:00')>=today),...state.tasks.filter(t=>t.due&&!t.done&&new Date(t.due+'T00:00:00')>=today).map(t=>({title:'✓ '+t.title,date:t.due,time:t.reminder_time,color:'#3b82f6'}))].sort((a,b)=>a.date.localeCompare(b.date)).slice(0,8);
-  var el=document.getElementById('upcoming-events');
-  if(!all.length){el.innerHTML='<div style="color:var(--text-dim);font-size:12px">Nothing upcoming</div>';return;}
-  el.innerHTML=all.map(e=>'<div class="cal-event-item" style="border-left-color:'+(e.color||'#3b82f6')+'"><div class="ev-date">'+new Date(e.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+'</div><div class="ev-title">'+esc(e.title)+'</div>'+(e.time?'<div class="ev-time">⏰ '+formatTime(e.time)+'</div>':'')+'</div>').join('');
-}
-function calDayClick(ds){document.getElementById('ev-date').value=ds;document.getElementById('ev-title').value='';document.getElementById('ev-time').value='';document.getElementById('event-modal').classList.add('open');setTimeout(()=>document.getElementById('ev-title').focus(),100);}
-function calPrev(){state.calMonth--;if(state.calMonth<0){state.calMonth=11;state.calYear--;}renderCalendar();}
-function calNext(){state.calMonth++;if(state.calMonth>11){state.calMonth=0;state.calYear++;}renderCalendar();}
-function closeEventModal(){document.getElementById('event-modal').classList.remove('open');}
-function saveEvent(){
-  var title=document.getElementById('ev-title').value.trim(),date=document.getElementById('ev-date').value;
-  if(!title||!date){showToast('Title and date required');return;}
-  state.events.push({id:'ev-'+Date.now(),title,date,time:document.getElementById('ev-time').value,color:document.getElementById('ev-color').value});
-  saveLocal();renderCalendar();closeEventModal();showToast('Event added ✓');
-}
-
-// ── FILES ──
-function dzOver(e){e.preventDefault();document.getElementById('drop-zone').classList.add('drag-over');}
-function dzLeave(){document.getElementById('drop-zone').classList.remove('drag-over');}
-function dzDrop(e){e.preventDefault();dzLeave();handleFiles(Array.from(e.dataTransfer.files));}
-function fileInputChange(e){handleFiles(Array.from(e.target.files));e.target.value='';}
-function handleFiles(files){files.forEach(f=>{var r=new FileReader();r.onload=ev=>{state.files.unshift({id:'f-'+Date.now()+Math.random(),name:f.name,size:f.size,type:f.type,data:ev.target.result});saveLocal();renderFiles();};r.readAsDataURL(f);});showToast(files.length+' file(s) added');}
-function renderFiles(){var grid=document.getElementById('files-grid');if(!state.files.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="ei">📭</div><p>No files yet.</p></div>';return;}grid.innerHTML=state.files.map(f=>{var sz=f.size>1048576?(f.size/1048576).toFixed(1)+' MB':f.size>1024?(f.size/1024).toFixed(0)+' KB':f.size+' B';return'<div class="file-card" onclick="openFile(\''+f.id+'\')"><button class="file-del" onclick="event.stopPropagation();deleteFile(\''+f.id+'\')">✕</button><div class="file-icon">'+fileIcon(f.type,f.name)+'</div><div class="file-name">'+esc(f.name)+'</div><div class="file-size">'+sz+'</div></div>';}).join('');}
-function fileIcon(t,n){if(t.startsWith('image/'))return'🖼️';if(t==='application/pdf')return'📄';if(t.includes('word')||n.endsWith('.docx'))return'📝';if(t.includes('sheet')||n.endsWith('.xlsx')||n.endsWith('.csv'))return'📊';if(t.startsWith('video/'))return'🎬';if(t.startsWith('audio/'))return'🎵';return'📎';}
-function openFile(id){var f=state.files.find(f=>f.id===id);if(f&&f.data){var a=document.createElement('a');a.href=f.data;a.download=f.name;a.click();}}
-function deleteFile(id){state.files=state.files.filter(f=>f.id!==id);saveLocal();renderFiles();showToast('File removed');}
-
-// ── VENDORS ──
-var vendorCatFilter='all';
-function setVendorFilter(cat,el){vendorCatFilter=cat;document.querySelectorAll('.vendor-cat-filter').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderVendors();}
-function renderVendors(){
-  var grid=document.getElementById('vendors-grid');
-  var cats=[...new Set(state.vendors.map(v=>v.category))].sort();
-  document.getElementById('vendor-cat-filters').innerHTML=cats.map(c=>'<button class="vendor-cat-filter'+(vendorCatFilter===c?' active':'')+'" onclick="setVendorFilter(\''+esc(c)+'\',this)">'+esc(c)+'</button>').join('');
-  var filtered=vendorCatFilter==='all'?state.vendors:state.vendors.filter(v=>v.category===vendorCatFilter);
-  if(!filtered.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="ei">📋</div><p>No vendors yet.<br>Add your first!</p></div>';return;}
-  var icons={Plumber:'🔧',Electrician:'⚡',Landscaping:'🌿',Cleaning:'🧹',HVAC:'❄️','Pest Control':'🪲','Pool Service':'🏊','General Contractor':'🏗',Painter:'🎨',Flooring:'🪵',Roofing:'🏠',Security:'🔒','Internet / Tech':'💻','Appliance Repair':'🔌',Other:'📋'};
-  var grouped={};filtered.forEach(v=>{if(!grouped[v.category])grouped[v.category]=[];grouped[v.category].push(v);});
-  grid.innerHTML=Object.entries(grouped).map(([cat,vendors])=>
-    '<div style="grid-column:1/-1;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin:8px 0 4px">'+esc(cat)+'</div>'+
-    vendors.map(v=>'<div class="vendor-card"><button class="vendor-del" onclick="deleteVendor(\''+v.id+'\')">✕</button><div class="vendor-top"><div class="vendor-avatar">'+(icons[v.category]||'📋')+'</div><div><div class="vendor-name">'+esc(v.name)+'</div><div class="vendor-cat-badge">'+esc(v.category)+'</div></div></div><div class="vendor-actions">'+(v.phone?'<a class="vendor-btn call" href="tel:'+v.phone+'">📞 '+esc(v.phone)+'</a>':'')+(v.email?'<a class="vendor-btn email" href="mailto:'+v.email+'">✉️ Email</a>':'')+'</div>'+(v.address?'<div class="vendor-address">📍 '+esc(v.address)+'</div>':'')+(v.notes?'<div class="vendor-notes">'+esc(v.notes)+'</div>':'')+'</div>').join('')
-  ).join('');
-  grid.querySelectorAll('[data-delvendor]').forEach(function(el){
-    el.addEventListener('click', function(){ deleteVendor(el.dataset.delvendor); });
-  });
-}
-function openVendorModal(){['v-name','v-phone','v-email','v-address','v-notes'].forEach(id=>document.getElementById(id).value='');document.getElementById('vendor-modal').classList.add('open');setTimeout(()=>document.getElementById('v-name').focus(),100);}
-function closeVendorModal(){document.getElementById('vendor-modal').classList.remove('open');}
-async function saveVendor(){
-  var name=document.getElementById('v-name').value.trim();if(!name){showToast('Name required');return;}
-  var v={id:'v-'+Date.now(),name,category:document.getElementById('v-cat').value,phone:document.getElementById('v-phone').value.trim(),email:document.getElementById('v-email').value.trim(),address:document.getElementById('v-address').value.trim(),notes:document.getElementById('v-notes').value.trim(),created_at:Date.now()};
-  state.vendors.push(v);renderVendors();closeVendorModal();
-  await supaInsert('focusd_vendors',v);showToast('Vendor added ✓');
-}
-async function deleteVendor(id){state.vendors=state.vendors.filter(v=>v.id!==id);renderVendors();await supaDelete('focusd_vendors',id);showToast('Vendor removed');}
-
-// ── BUILD SIDEBAR CATS ──
-function buildCatNav() {
-  var nav = document.getElementById('cat-nav');
-  if (!nav) return;
-  var html = '';
-  CATEGORIES.forEach(function(cat) {
-    var subs = state.subcategories.filter(function(s) { return s.category_id === cat.id; });
-    var subHtml = '';
-    if (subs.length) {
-      subs.forEach(function(s) {
-        subHtml += '<div class="cat-sub-item" id="subnav-' + s.id + '" data-cat="' + cat.id + '" data-sub="' + s.id + '" data-label="' + s.label.replace(/"/g,'&quot;') + '">' +
-          '<span class="cat-sub-dot" style="background:' + cat.color + '"></span>' +
-          '<span>' + esc(s.label) + '</span>' +
-        '</div>';
-      });
-    } else {
-      subHtml = '<div style="padding:4px 12px;font-size:11px;color:var(--text-dim)">No subcategories yet</div>';
-    }
-    html += '<div class="cat-group" id="catgroup-' + cat.id + '">' +
-      '<div class="cat-group-header" id="catnav-' + cat.id + '" data-catid="' + cat.id + '">' +
-        '<span class="cat-dot" style="background:' + cat.color + '"></span>' +
-        '<span>' + cat.label + '</span>' +
-        (subs.length ? '<span class="nav-item badge" style="background:' + cat.color + '22;color:' + cat.color + ';border:none">' + subs.length + '</span>' : '') +
-        '<span class="cat-group-chevron">&rsaquo;</span>' +
-      '</div>' +
-      '<div class="cat-sublist">' + subHtml + '</div>' +
-    '</div>';
-  });
-  nav.innerHTML = html;
-
-  // Attach click handlers via JS (no inline onclick — avoids quote escaping issues)
-  nav.querySelectorAll('.cat-group-header').forEach(function(el) {
-    el.addEventListener('click', function() { toggleCatGroup(el.dataset.catid, el); });
-  });
-  nav.querySelectorAll('.cat-sub-item').forEach(function(el) {
-    el.addEventListener('click', function(e) {
-      e.stopPropagation();
-      filterBySubcat(el.dataset.cat, el.dataset.sub, el.dataset.label, el);
-    });
-  });
-}
-
-function toggleCatGroup(catId, headerEl) {
-  var clickedGroup = document.getElementById('catgroup-'+catId);
-  var isOpen = clickedGroup.classList.contains('open');
-  // Close all groups
-  document.querySelectorAll('.cat-group').forEach(g => g.classList.remove('open'));
-  document.querySelectorAll('.cat-group-header').forEach(h => h.classList.remove('active'));
-  // If it wasn't open, open it and filter by category
-  if (!isOpen) {
-    clickedGroup.classList.add('open');
-    headerEl.classList.add('active');
-    // Deactivate other nav items
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    state.catFilter = catId;
-    state.subcatFilter = null;
-    var cat = CATEGORIES.find(c => c.id === catId);
-    document.getElementById('tasks-panel-title').textContent = cat ? cat.icon+' '+cat.label : 'Tasks';
-    // Switch to tasks panel
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('panel-tasks').classList.add('active');
-    renderTasks();
-  } else {
-    // Was open — just close it, keep filter
-  }
-}
-
-function filterBySubcat(catId, subcatId, subcatLabel, el) {
-  // Close all other groups, keep this one open
-  document.querySelectorAll('.cat-group').forEach(g => g.classList.remove('open'));
-  document.getElementById('catgroup-'+catId).classList.add('open');
-  document.querySelectorAll('.cat-group-header').forEach(h => h.classList.remove('active'));
-  document.getElementById('catnav-'+catId).classList.add('active');
-  document.querySelectorAll('.cat-sub-item').forEach(s => s.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  state.catFilter = catId;
-  state.subcatFilter = subcatId;
-  var cat = CATEGORIES.find(c => c.id === catId);
-  document.getElementById('tasks-panel-title').textContent = (cat ? cat.icon+' '+cat.label : '') + ' › ' + subcatLabel;
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-tasks').classList.add('active');
-  renderTasks();
-}
-
-// ── SETTINGS / SUBCATEGORIES ──
-function renderSettings() {
-  var list = document.getElementById('settings-cat-list');
-  if (!list) return;
-  list.innerHTML = CATEGORIES.map(function(cat) {
-    var subs = state.subcategories.filter(function(s){ return s.category_id === cat.id; });
-    var subsHtml = subs.length ? subs.map(function(s){ return subcatRowHTML(s); }).join('') 
-      : '<div style="font-size:12px;color:var(--text-dim);padding:4px 0">No subcategories yet.</div>';
-    return '<div class="cat-settings-card" id="catcard-'+cat.id+'">' +
-      '<div class="cat-settings-header" data-togglecat="'+cat.id+'">' +
-        '<span class="cat-settings-dot" style="background:'+cat.color+'"></span>' +
-        '<span class="cat-settings-name">'+cat.icon+' '+cat.label+'</span>' +
-        '<span class="cat-settings-count">'+subs.length+' subcategor'+(subs.length===1?'y':'ies')+'</span>' +
-        '<span class="cat-settings-chevron">›</span>' +
-      '</div>' +
-      '<div class="cat-settings-body">' +
-        '<div class="subcat-list" id="sublist-'+cat.id+'">'+subsHtml+'</div>' +
-        '<div class="add-subcat-row">' +
-          '<input class="add-subcat-input" id="new-subcat-'+cat.id+'" placeholder="Add subcategory…">' +
-          '<button class="btn btn-primary btn-sm" data-addsubcat="'+cat.id+'">Add</button>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-  // Attach listeners
-  list.querySelectorAll('[data-togglecat]').forEach(function(el){
-    el.addEventListener('click', function(){ toggleCatCard(el.dataset.togglecat); });
-  });
-  list.querySelectorAll('[data-addsubcat]').forEach(function(el){
-    el.addEventListener('click', function(){ addSubcat(el.dataset.addsubcat); });
-  });
-  list.querySelectorAll('.add-subcat-input').forEach(function(inp){
-    var catId = inp.id.replace('new-subcat-','');
-    inp.addEventListener('keydown', function(e){ if(e.key==='Enter') addSubcat(catId); });
-  });
-  attachSubcatListeners(list);
-}
-
-function subcatRowHTML(s) {
-  return '<div class="subcat-row" id="subrow-'+s.id+'">' +
-    '<span class="subcat-label" id="sublabel-'+s.id+'">'+esc(s.label)+'</span>' +
-    '<button class="subcat-btn" data-editsubcat="'+s.id+'" title="Edit">✏️</button>' +
-    '<button class="subcat-btn del" data-delsubcat="'+s.id+'" data-delcatid="'+s.category_id+'" title="Delete">🗑</button>' +
-  '</div>';
-}
-
-function attachSubcatListeners(container) {
-  container.querySelectorAll('[data-editsubcat]').forEach(function(el){
-    el.addEventListener('click', function(){ startEditSubcat(el.dataset.editsubcat); });
-  });
-  container.querySelectorAll('[data-delsubcat]').forEach(function(el){
-    el.addEventListener('click', function(){ deleteSubcat(el.dataset.delsubcat, el.dataset.delcatid); });
-  });
-}
-
-function toggleCatCard(catId) {
-  document.getElementById('catcard-'+catId).classList.toggle('open');
-}
-
-function startEditSubcat(id) {
-  var s = state.subcategories.find(function(sc){ return sc.id===id; });
-  if (!s) return;
-  var row = document.getElementById('subrow-'+id);
-  row.innerHTML =
-    '<input class="subcat-edit-input" id="edit-subcat-'+id+'" value="'+esc(s.label)+'">' +
-    '<button class="subcat-btn save" data-savesubcat="'+id+'" title="Save">✓</button>' +
-    '<button class="subcat-btn" data-cancelsubcat="1" title="Cancel">✕</button>';
-  var inp = document.getElementById('edit-subcat-'+id);
-  if (inp) {
-    inp.focus();
-    inp.addEventListener('keydown', function(e){ if(e.key==='Enter') saveEditSubcat(id); if(e.key==='Escape') renderSettings(); });
-  }
-  row.querySelector('[data-savesubcat]').addEventListener('click', function(){ saveEditSubcat(id); });
-  row.querySelector('[data-cancelsubcat]').addEventListener('click', renderSettings);
-}
-
-async function saveEditSubcat(id) {
-  var inp = document.getElementById('edit-subcat-'+id);
-  var label = inp ? inp.value.trim() : '';
-  if (!label) { showToast('Label cannot be empty'); return; }
-  var s = state.subcategories.find(s=>s.id===id);
-  if (s) s.label = label;
-  // Update any tasks that reference this subcat
-  state.tasks.forEach(t => { if (t.subcategory === id) t.subcategory_label = label; });
-  renderSettings();
-  buildCatNav();
-  renderTasks();
-  await supaUpdate('focusd_subcategories', id, { label });
-  showToast('Subcategory updated ✓');
-}
-
-async function addSubcat(catId) {
-  var inp = document.getElementById('new-subcat-'+catId);
-  var label = inp ? inp.value.trim() : '';
-  if (!label) return;
-  var s = { id:'sub-'+Date.now(), category_id:catId, label, created_at:Date.now(), created_by:state.currentUser||'unknown' };
-  state.subcategories.push(s);
-  inp.value = '';
-  renderSettings();
-  buildCatNav();
-  // Re-open the card
-  var card = document.getElementById('catcard-'+catId);
-  if (card) card.classList.add('open');
-  await supaInsert('focusd_subcategories', s);
-  showToast('Subcategory added ✓');
-}
-
-async function deleteSubcat(id, catId) {
-  state.subcategories = state.subcategories.filter(s=>s.id!==id);
-  renderSettings();
-  buildCatNav();
-  var card = document.getElementById('catcard-'+catId);
-  if (card) card.classList.add('open');
-  await supaDelete('focusd_subcategories', id);
-  showToast('Subcategory removed');
-}
-
-// ── MOBILE CATEGORY STRIP & PICKER ──
-function renderCatStrip() {
-  var strip = document.getElementById('cat-strip');
-  if (!strip) return;
-
-  var cat = state.catFilter ? CATEGORIES.find(function(c){ return c.id === state.catFilter; }) : null;
-  var subLabel = '';
-  if (state.subcatFilter) {
-    var sub = state.subcategories.find(function(s){ return s.id === state.subcatFilter; });
-    if (sub) subLabel = ' › ' + sub.label;
-  }
-
-  var html = '<button class="cat-picker-btn ' + (cat ? 'has-filter' : '') + '" onclick="openCatPicker()">' +
-    '<span class="picker-icon">' + (cat ? cat.icon : '🏠') + '</span>' +
-    '<span class="picker-label">' + (cat ? cat.label + subLabel : 'All Categories') + '</span>' +
-    '<span class="picker-chevron">▾</span>' +
-  '</button>';
-
-  if (cat) {
-    html += '<button class="cat-picker-clear" onclick="clearCatFilter()" title="Clear">✕</button>';
-  }
-
-  strip.innerHTML = html;
-}
-
-function clearCatFilter() {
-  state.catFilter = null;
-  state.subcatFilter = null;
-  document.getElementById('tasks-panel-title').textContent = '✓ All Tasks';
-  renderCatStrip();
-  renderTasks();
-}
-
-function openCatPicker() {
-  var list = document.getElementById('cat-picker-list');
-  var html = '';
-
-  // All option
-  html += '<div class="cat-picker-item' + (!state.catFilter ? ' active' : '') + '" data-pickcat="all">' +
-    '<span class="cat-picker-dot" style="background:var(--accent)"></span>' +
-    '<span class="cat-picker-name">All Categories</span>' +
-    (!state.catFilter ? '<span class="cat-picker-check">✓</span>' : '') +
-  '</div>';
-
-  CATEGORIES.forEach(function(cat) {
-    var isActive = state.catFilter === cat.id;
-    var subs = state.subcategories.filter(function(s){ return s.category_id === cat.id; });
-    html += '<div class="cat-picker-item' + (isActive ? ' active' : '') + '" data-pickcat="' + cat.id + '">' +
-      '<span class="cat-picker-dot" style="background:' + cat.color + '"></span>' +
-      '<span class="cat-picker-name">' + cat.icon + ' ' + cat.label + '</span>' +
-      (subs.length ? '<span class="cat-picker-sub">' + subs.length + ' sub</span>' : '') +
-      (isActive && !state.subcatFilter ? '<span class="cat-picker-check">✓</span>' : '') +
-    '</div>';
-    // Show subcats inline if this cat is active
-    if (isActive && subs.length) {
-      html += '<div class="subcat-picker-items">';
-      subs.forEach(function(s) {
-        var subActive = state.subcatFilter === s.id;
-        html += '<div class="subcat-picker-item' + (subActive ? ' active' : '') + '" data-picksub="' + s.id + '" data-picksubcat="' + cat.id + '">' +
-          '<span class="subcat-picker-dot" style="background:' + cat.color + '"></span>' +
-          '<span class="subcat-picker-name">' + s.label + '</span>' +
-          (subActive ? '<span class="cat-picker-check" style="margin-left:auto">✓</span>' : '') +
-        '</div>';
-      });
-      html += '</div>';
-    }
-  });
-
-  list.innerHTML = html;
-
-  // Attach listeners
-  list.querySelectorAll('[data-pickcat]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      var val = el.dataset.pickcat;
-      if (val === 'all') {
-        state.catFilter = null;
-        state.subcatFilter = null;
-        document.getElementById('tasks-panel-title').textContent = '✓ All Tasks';
-      } else {
-        state.catFilter = val;
-        state.subcatFilter = null;
-        var cat = CATEGORIES.find(function(c){ return c.id === val; });
-        document.getElementById('tasks-panel-title').textContent = cat ? cat.icon + ' ' + cat.label : 'Tasks';
-      }
-      closeCatPickerDirect();
-      renderCatStrip();
-      renderTasks();
-    });
-  });
-
-  list.querySelectorAll('[data-picksub]').forEach(function(el) {
-    el.addEventListener('click', function(e) {
-      e.stopPropagation();
-      state.subcatFilter = el.dataset.picksub;
-      var sub = state.subcategories.find(function(s){ return s.id === el.dataset.picksub; });
-      var cat = CATEGORIES.find(function(c){ return c.id === el.dataset.picksubcat; });
-      if (cat && sub) document.getElementById('tasks-panel-title').textContent = cat.icon + ' ' + cat.label + ' › ' + sub.label;
-      closeCatPickerDirect();
-      renderCatStrip();
-      renderTasks();
-    });
-  });
-
-  document.getElementById('cat-picker-overlay').classList.add('open');
-}
-
-function closeCatPicker(e) {
-  if (e.target === document.getElementById('cat-picker-overlay')) closeCatPickerDirect();
-}
-function closeCatPickerDirect() {
-  document.getElementById('cat-picker-overlay').classList.remove('open');
-}
-
-
-// ── COMPLETED TOGGLE ──
-function toggleCompleted() {
-  state.showCompleted = !state.showCompleted;
-  var btn = document.getElementById('completed-toggle');
-  if (btn) btn.textContent = state.showCompleted ? '✓ Hide Done' : '✓ Show Done';
-  renderTasks();
-}
-
-// ── MOBILE NAV SYNC ──
-function syncMobileNav(el) {
-  document.querySelectorAll('#mobile-nav-section .nav-item').forEach(function(n){ n.classList.remove('active'); });
-  if (el) el.classList.add('active');
-}
-
-// ── UTILS ──
-function pad(n){return String(n).padStart(2,'0');}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function formatTime(t){if(!t)return'';var[h,m]=t.split(':');var hh=parseInt(h);return(hh%12||12)+':'+m+' '+(hh<12?'AM':'PM');}
-function formatRelTime(ts){var diff=Date.now()-ts,m=Math.floor(diff/60000),h=Math.floor(m/60),d=Math.floor(h/24);if(d>0)return d+'d ago';if(h>0)return h+'h ago';if(m>0)return m+'m ago';return'just now';}
-function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
-
-['task-modal','edit-task-modal','event-modal','vendor-modal'].forEach(id=>{document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});});
-
-// ── INIT ──
-function init() {
-  updateDateHeader();
-  renderFiles();
-  initUser();
-}
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
-</script>
-
-
-</body></html>
+</script></body></html>

@@ -3115,10 +3115,11 @@ async function saveEditTask() {
   t.reminder_time=document.getElementById('edit-modal-time').value;
   t.priority=document.getElementById('edit-modal-priority').value;
   t.is_shared=document.getElementById('edit-modal-shared').checked;
+  if (modalAttachments.length) { t.attachments = (t.attachments||[]).concat(modalAttachments); modalAttachments = []; }
   var taskIdToSave = editingTaskId;
   closeEditModal(); renderTasks();
   if (state.viewMode==='board') renderBoard();
-  var ok = await supaUpdate('focusd_tasks', taskIdToSave, {title:t.title,note:t.note,category:t.category,subcategory:t.subcategory,subcategory_label:t.subcategory_label,due:t.due,reminder_time:t.reminder_time,priority:t.priority,is_shared:t.is_shared});
+  var ok = await supaUpdate('focusd_tasks', taskIdToSave, {title:t.title,note:t.note,category:t.category,subcategory:t.subcategory,subcategory_label:t.subcategory_label,due:t.due,reminder_time:t.reminder_time,priority:t.priority,is_shared:t.is_shared,attachments:t.attachments||[]});
   if (ok) showToast('Task updated ✓');
 }
 

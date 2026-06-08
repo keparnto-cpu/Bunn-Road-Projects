@@ -1152,7 +1152,7 @@ var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 var HEADERS = { 'Content-Type': 'application/json', 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY };
 
 async function supaGet(table, filter) {
-  var url = SUPA_URL + '/rest/v1/' + table + '?select=*' + (filter ? '&' + filter : '') + '&order=created_at.desc';
+  var url = SUPA_URL + '/rest/v1/' + table + '?select=*' + (filter ? '&' + filter : '');  if (!filter || filter.indexOf('order=') === -1) url += '&order=created_at.desc';
   try {
     var r = await fetch(url, { headers: HEADERS });
     if (!r.ok) {
@@ -1321,7 +1321,7 @@ async function loadTasks() {
   state._tasksLoading = true;
   try {
     var allFetched = await supaGet('focusd_tasks', '');
-    var comments = await supaGet('focusd_comments');
+    var comments = await supaGet('focusd_comments', 'order=ts.asc');
     // Load all tasks - both shared and all private tasks
     // Private tasks from other users won't show due to RLS in future,
     // for now load all and filter display-side
